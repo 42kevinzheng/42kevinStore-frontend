@@ -10,14 +10,15 @@ export default makeStyles(() => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%',
+    paddingTop: '100%',
   },
   cardActions: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   cardContent: {
     display: 'flex',
     justifyContent: 'space-between',
   },
+
 }));

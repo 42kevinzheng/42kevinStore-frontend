@@ -11,6 +11,7 @@ export default makeStyles((theme) => ({
   },
   fit: {
     margin: "auto",
-    maxWidth: '80%'
+    maxWidth: '75%'
   },
+  
 }));

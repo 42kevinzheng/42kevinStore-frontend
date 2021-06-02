@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';
+import Rating from "@material-ui/lab/Rating";
+
 
 import useStyles from './styles';
 
@@ -14,18 +16,31 @@ const Pokemoncards = ({ product }) => {
         <CardContent>
           <div className={classes.cardContent}>
             <Typography gutterBottom variant="h5" component="h2">
-              {product.name}
+              {product.name  } 
             </Typography>
             <Typography gutterBottom variant="h5" component="h2">
-              {product.types[0].type.name}
+              ${45.00}
             </Typography>
           </div>
-          <Typography dangerouslySetInnerHTML={{ __html: product.overview }} variant="body2" color="textSecondary" component="p" />
+          <Typography gutterBottom variant="h5" component="legend">
+          <Rating name="half-rating" defaultValue={4} precision={0.5} readOnly/> 41 reviews
+          
+          </Typography>
         </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>
+       
+
+
           <IconButton aria-label="Add to Cart" >
-            <AddShoppingCart />
+            <AddShoppingCart fontSize='large'/>
           </IconButton>
+
+          <Typography gutterBottom variant="h5" component="legend">
+        <a href="product.html">
+         Store Name
+            </a>
+          </Typography>
+
         </CardActions>
       </Card>
     );

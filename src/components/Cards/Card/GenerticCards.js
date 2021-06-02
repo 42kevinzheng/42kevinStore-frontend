@@ -22,6 +22,9 @@ const GenerticCards = ({ product, onAddToCart }) => {
           </Typography>
         </div>
         <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" component="p" />
+        <Typography  variant="h6" component="h1">
+          Stars
+          </Typography>
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
         <IconButton aria-label="Add to Cart" onClick={handleAddToCart}>
