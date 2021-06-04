@@ -27,3 +27,12 @@
   .row.center {
     justify-content: center;
   }
+
+  a:link {
+    color: blue; 
+    text-decoration: none;
+  }
+  
+  a:visited {
+    text-decoration: none;
+  }

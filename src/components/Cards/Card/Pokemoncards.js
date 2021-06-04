@@ -2,22 +2,25 @@ import React from 'react';
 import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';
 import Rating from "@material-ui/lab/Rating";
-
+import { Link } from 'react-router-dom';
 
 import useStyles from './styles';
 
 const Pokemoncards = ({ product }) => {
     const classes = useStyles();
 
-
     return (
       <Card className={classes.root}>
         <CardMedia className={classes.media} image={product.sprites.other.dream_world.front_default} title={product.original_title} />
         <CardContent>
           <div className={classes.cardContent}>
+
             <Typography gutterBottom variant="h5" component="h2">
-              {product.name  } 
+            <a href={"product.html"} >
+              {product.name } 
+            </a>
             </Typography>
+
             <Typography gutterBottom variant="h5" component="h2">
               ${45.00}
             </Typography>

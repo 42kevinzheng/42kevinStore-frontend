@@ -26,14 +26,10 @@ const Cards = () => {
    createPokemonObject(data.results)
  }
 
-
 useEffect(() => {
  getAllPokemons();
  fetchData();
-
 }, [])
-
-
 
   const fetchData = async () =>{
     const {data} = await axios.get(
@@ -42,7 +38,6 @@ useEffect(() => {
     console.log(data);
     setContent(data.results);
   }
-
 
   const classes = useStyles();
 
@@ -60,10 +55,6 @@ useEffect(() => {
           ))}
         </Grid>
 
-
-
-
-
       <Grid container justify="center" spacing={4}>
         {contentttt.map((product) => (
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
@@ -71,7 +62,6 @@ useEffect(() => {
           </Grid>
         ))}
       </Grid>
-
 
     </div>
     </div>
