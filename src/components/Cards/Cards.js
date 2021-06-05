@@ -7,6 +7,7 @@ import useStyles from './styles';
 import axios from 'axios';
 
 
+
 const Cards = () => {
 
   const[allPokemons, setAllPokemons] = useState([])
@@ -39,6 +40,7 @@ useEffect(() => {
     setContent(data.results);
   }
 
+
   const classes = useStyles();
 
 
@@ -54,6 +56,8 @@ useEffect(() => {
             </Grid>
           ))}
         </Grid>
+
+
 
       <Grid container justify="center" spacing={4}>
         {contentttt.map((product) => (
