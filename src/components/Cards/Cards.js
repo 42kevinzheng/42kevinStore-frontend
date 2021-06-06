@@ -1,11 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
-import Product from './Card/GenerticCards';
-import Product1 from './Card/Moviecards';
-import Pokemon from './Card/Pokemoncards';
+import Card from './Card/Card';
 import useStyles from './styles';
 import axios from 'axios';
-
 
 
 const Cards = () => {
@@ -52,17 +49,28 @@ useEffect(() => {
         <Grid container justify="center" spacing={4}>
           {allPokemons.map( (pokemonStats, index) => (
             <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-              <Pokemon product={pokemonStats} />
+              <Card
+              product = {pokemonStats} 
+              title = {pokemonStats.original_title}
+              image={pokemonStats.sprites.other.dream_world.front_default}
+              name={pokemonStats.name}
+              type={pokemonStats.types[0].type.name}
+              />
             </Grid>
           ))}
         </Grid>
 
 
-
       <Grid container justify="center" spacing={4}>
         {contentttt.map((product) => (
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-            <Product1 product={product} />
+            <Card
+            product={product} 
+            image = {product.poster_path}
+            title = {product.title}
+            name = {product.title}
+            price ={product.vote_average}
+            />
           </Grid>
         ))}
       </Grid>

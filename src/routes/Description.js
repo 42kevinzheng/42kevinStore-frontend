@@ -1,25 +1,31 @@
+import { ContactsOutlined } from '@material-ui/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-const Item = ({product}) => {
+const Description = (products) => {
+    const image = products.location.state.image;
+    const name =products.location.state.name;
+    const title = products.location.state.title;
+    const price = products.location.state.price;
+    //products.location.state.product
 
     return (
         <div>
       <Link to="/">Back to result</Link>
       <div className="row top">
         <div className="col-2">
-          <img className="large" src={product.image} alt={product.name}></img>
+          <img className="large" src={image} alt={name}></img>
         </div>
         <div className="col-1">
           <ul>
             <li>
-              <h1>{product.name}</h1>
+              <h1>{name}</h1>
             </li>
-            <li>Pirce : ${product.price}</li>
+            <li>Pirce : ${price}</li>
             <li>
               Description:
-              <p>{product.description}</p>
+              <p>{name}</p>
             </li>
           </ul>
         </div>
@@ -29,14 +35,14 @@ const Item = ({product}) => {
               <li>
                 <div className="row">
                   <div>Price</div>
-                  <div className="price">${product.price}</div>
+                  <div className="price">${price}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Status</div>
                   <div>
-                    {product.countInStock > 0 ? (
+                    {products.countInStock > 0 ? (
                       <span className="success">In Stock</span>
                     ) : (
                       <span className="error">Unavailable</span>
@@ -55,4 +61,4 @@ const Item = ({product}) => {
     )
 };
 
-export default Item
+export default Description;
