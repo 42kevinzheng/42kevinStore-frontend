@@ -7,7 +7,7 @@ import Home from './routes/Home';
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <div >
           <Route exact path ="/" component={Home} ></Route>
           <Route path="/description/" component={Description}></Route>
           <footer className="row center">All right reserved</footer>

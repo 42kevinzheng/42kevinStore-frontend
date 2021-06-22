@@ -1,6 +1,7 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar/Navbar';
 
 
 const Description = (products) => {
@@ -13,29 +14,40 @@ const Description = (products) => {
     return (
         <div>
       <Link to="/">Back to result</Link>
+
+
       <div className="row top">
-        <div className="col-2">
+
+
+        <div className="imgContainer">
           <img className="large" src={image} alt={name}></img>
         </div>
+
+
+
+
         <div className="col-1">
           <ul>
             <li>
               <h1>{name}</h1>
             </li>
-            <li>Pirce : ${price}</li>
+            <li>Pirce :{price}</li>
             <li>
               Description:
               <p>{name}</p>
             </li>
           </ul>
         </div>
+
+
+
         <div className="col-1">
           <div className="card card-body">
             <ul>
               <li>
                 <div className="row">
                   <div>Price</div>
-                  <div className="price">${price}</div>
+                  <div className="price">{price}</div>
                 </div>
               </li>
               <li>
@@ -51,12 +63,21 @@ const Description = (products) => {
                 </div>
               </li>
               <li>
-                <button className="primary block">Add to Cart</button>
+                <button className="cart">Add to Cart</button>
               </li>
             </ul>
           </div>
         </div>
+
+
+
+
+
       </div>
+
+
+
+
     </div>
     )
 };
