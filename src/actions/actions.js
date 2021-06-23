@@ -8,3 +8,12 @@ import * as api from '../api/api'
       console.log(error.message);
     }
   };
+
+  export const detailProduct = (id) => async (dispatch) => {
+    try {
+      const { data } = await api.fetchDetailProduct(id);
+      dispatch({ type: 'FETCH_PRODUCT', payload: data });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };

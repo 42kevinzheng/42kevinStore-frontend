@@ -9,17 +9,11 @@ import {getProducts} from '../../actions/actions';
 const Cards = () => {
 
   const classes = useStyles();
-
   const dispatch = useDispatch();
-
-  const postss = useSelector((state)=>state.product);
-
-
-
+  const postss = useSelector((state)=>state.allProducts);
 
   const[allPokemons, setAllPokemons] = useState([])
-  const [contentttt, setContent] = useState([]);
-  // const [productss, setProducts] = useState([]);
+  const [movie, setMovie] = useState([]);
 
  const getAllPokemons = async () => {
    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20')
@@ -37,24 +31,15 @@ const Cards = () => {
 
  const fetchData = async () =>{
   const {data} = await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=64754b85c71d637fa51274bc8a1288a4`);
-  setContent(data.results);
+  setMovie(data.results);
 }
-// const serverData = async () => {
-//     const { data } = await axios.get('http://localhost:5001/api/products');
-//     setProducts(data);
-// }
+
 
 useEffect(() => {
  getAllPokemons();
  fetchData();
  dispatch(getProducts());
-
-//  serverData();
-}, [dispatch])
-
-
-
-
+}, [])
 
   return (
     <div className ={classes.content} >
@@ -70,6 +55,7 @@ useEffect(() => {
               image={pokemonStats.sprites.other.dream_world.front_default}
               name={pokemonStats.name}
               type={pokemonStats.types[0].type.name}
+              rating = {pokemonStats.base_experience}
               />
             </Grid>
           ))}
@@ -90,14 +76,16 @@ useEffect(() => {
       </Grid>
 
       <Grid container justify="center" spacing={4}>
-        {contentttt.map((product) => (
+        {movie.map((product) => (
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
             <Card
             product={product} 
-            image = {product.poster_path}
+            image = {'https://image.tmdb.org/t/p/w500/'+product.poster_path}
             title = {product.title}
             name = {product.title}
-            price ={product.vote_average}
+            dis = {product.overview}
+            price ={product.popularity}
+            rating = {product.vote_average}
             />
           </Grid>
         ))}

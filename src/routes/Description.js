@@ -9,10 +9,13 @@ const Description = (products) => {
     const name =products.location.state.name;
     const title = products.location.state.title;
     const price = products.location.state.price;
+    const dis = products.location.state.dis;
     //products.location.state.product
 
     return (
         <div>
+               <Navbar />
+        <div className="toolbar">
       <Link to="/">Back to result</Link>
 
 
@@ -34,7 +37,7 @@ const Description = (products) => {
             <li>Pirce :{price}</li>
             <li>
               Description:
-              <p>{name}</p>
+              <p>{dis?dis:name}</p>
             </li>
           </ul>
         </div>
@@ -77,7 +80,7 @@ const Description = (products) => {
 
 
 
-
+</div>
     </div>
     )
 };

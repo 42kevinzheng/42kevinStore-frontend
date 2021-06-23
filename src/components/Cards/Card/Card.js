@@ -5,8 +5,21 @@ import Rating from "@material-ui/lab/Rating";
 import { Link } from 'react-router-dom';
 import useStyles from './styles';
 
-const GenerticCards = ({ product, onAddToCart, image, name, type, title, price  }) => {
+const GenerticCards = ({ product, onAddToCart, image, name, type, title, price, rating,dis  }) => {
   const classes = useStyles();
+
+  if(rating >5)
+  {
+    rating = rating/2;
+  }
+  else if(rating>10)
+  {
+    rating = rating/3;
+  }
+  else if (rating>100)
+  {
+    rating = rating/4;
+  }
 
   return (
     <Card className={classes.root}>
@@ -14,13 +27,14 @@ const GenerticCards = ({ product, onAddToCart, image, name, type, title, price  
       <CardContent>
         <div className={classes.cardContent}>
         <Typography gutterBottom variant="h5" component="h2">
-						<Link to= {{ pathname:`/description/`, 
+						<Link to= {{ pathname:`/description/${product.id}`, 
             state: {
               product,
               image:image,
               name:name,
               title:title,
               price:price,
+              dis:dis,
             } 
             }} > 
               {name} 
@@ -32,7 +46,7 @@ const GenerticCards = ({ product, onAddToCart, image, name, type, title, price  
         </div>
         {/* <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" component="p" /> */}
         <Typography gutterBottom variant="h5" component="legend">
-          <Rating name="half-rating" defaultValue={4} precision={0.5} readOnly/> 41 reviews
+          <Rating name="half-rating" defaultValue={1} value={rating} precision={0.5} readOnly/> {rating}
           </Typography>
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>

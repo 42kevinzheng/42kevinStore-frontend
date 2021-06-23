@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <div >
           <Route exact path ="/" component={Home} ></Route>
-          <Route path="/description/" component={Description}></Route>
+          <Route path="/description/:id" component={Description}></Route>
           <footer className="row center">All right reserved</footer>
       </div>
     </BrowserRouter>
