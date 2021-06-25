@@ -27,7 +27,7 @@ const GenerticCards = ({ product, onAddToCart, image, name, type, title, price, 
       <CardContent>
         <div className={classes.cardContent}>
         <Typography gutterBottom variant="h5" component="h2">
-						<Link to= {{ pathname:`/description/${product.id}`, 
+						<Link to= {{ pathname:`/description/${product.id||product._id}`, 
             state: {
               product,
               image:image,
