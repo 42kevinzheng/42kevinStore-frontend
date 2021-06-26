@@ -7,7 +7,7 @@ import CartScreen from './routes/CartScreen';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter> 
       <div >
           <Route exact path ="/" component={Home} ></Route>
           <Route path="/description/:id" component={Description}></Route>

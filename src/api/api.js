@@ -6,3 +6,5 @@ export const fetchProducts = () => axios.get(url);
 
 export const fetchDetailProduct = (_id) => axios.get(`http://localhost:5001/api/products/${_id}`);
 
+export const fetchCartData = (_id) => axios.get(`http://localhost:5001/api/products/${_id}`);
+

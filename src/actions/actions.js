@@ -17,3 +17,29 @@ import * as api from '../api/api'
       console.log(error.message);
     }
   };
+
+  export const addToCart = (productId, qty) => async (dispatch, getState) => {
+    try {
+      const { data } = await api.fetchCartData(productId);
+      dispatch({
+        type: 'ADD_CART',
+        payload: { 
+          name: data.name,
+          image: data.image,
+          price: data.price,
+          countInStock: data.countInStock,
+          product: data._id,
+          qty,
+        },
+      });
+      localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+    } catch(error) {
+      console.log(error.message);
+    }
+  };
+
+
+  export const removeFromCart = (productId) => (dispatch, getState) => {
+    dispatch({ type: 'REMOVE_CART', payload: productId });
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+  };

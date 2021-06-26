@@ -15,10 +15,10 @@ const Cards = () => {
   const[allPokemons, setAllPokemons] = useState([])
   const [movie, setMovie] = useState([]);
 
- const getAllPokemons = async () => {
-   const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20')
-   const data = await res.json()
-   function createPokemonObject(results)  {
+const getAllPokemons = async () => {
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20')
+  const data = await res.json()
+  function createPokemonObject(results)  {
     results.forEach( async pokemon => {
       const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
       const data =  await res.json()
@@ -26,20 +26,19 @@ const Cards = () => {
       await allPokemons.sort((a, b) => a.id - b.id)
     })
   }
-   createPokemonObject(data.results)
- }
+  createPokemonObject(data.results)
+}
 
- const fetchData = async () =>{
+const fetchData = async () =>{
   const {data} = await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=64754b85c71d637fa51274bc8a1288a4`);
   setMovie(data.results);
 }
-
 
 useEffect(() => {
  getAllPokemons();
  fetchData();
  dispatch(getProducts());
-}, [])
+}, [dispatch])
 
   return (
     <div className ={classes.content} >
@@ -63,7 +62,7 @@ useEffect(() => {
 
         <Grid container justify="center" spacing={4}>
         {postss.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
+          <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
             <Card 
             product={product} 
             image = {product.image}

@@ -13,13 +13,12 @@ const Description = (products) => {
   const dis = products.location.state.dis||product.description;
   const image = products.location.state.image||product.image;
   const name = products.location.state.name||product.name;
-  const title = products.location.state.title||product.title;
   const price = products.location.state.price||product.price;
 
 
     useEffect(()=>{
         dispatch(detailProduct(_id));
-    },[dispatch])
+    },[dispatch, _id])
 
     const addToCartHandler = () => {
       products.history.push(`/cart/${_id}?qty=${qty}`);

@@ -1,12 +1,16 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Badge,Typography } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import useStyles from './styles';
 import logo from './store.png';
+import { useSelector } from 'react-redux';
+
 
 const Navbar = () => {
 
     const classes = useStyles();
+    const cart = useSelector((state) => state.cart);
+    const { cartItems } = cart;
 
     return (
         <div>
@@ -18,7 +22,7 @@ const Navbar = () => {
           <div className={classes.grow} />
           <div>
             <IconButton aria-label="Show cart items" color="inherit">
-              <Badge badgeContent={2} color="secondary">
+              <Badge badgeContent={cartItems.length > 0? cartItems.length:0} color="secondary">
                 <ShoppingCart />
               </Badge>
             </IconButton>
