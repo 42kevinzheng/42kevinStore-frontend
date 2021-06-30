@@ -5,6 +5,7 @@ import Description from './routes/Description';
 import Home from './routes/Home';
 import CartScreen from './routes/CartScreen';
 import SigninScreen from './routes/Signin';
+import RegisterScreen from './routes/Register';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/description/:id" component={Description}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/signin" component={SigninScreen}></Route>
+          <Route path="/register" component={RegisterScreen}></Route>
           <footer className="row center">All right reserved</footer>
       </div>
     </BrowserRouter>

@@ -10,6 +10,10 @@ export const fetchCartData = (_id) => axios.get(`http://localhost:5001/api/produ
 
 export const fetchSignin = (email, password) => axios.post('http://localhost:5001/api/users/signin',{email,password});
 
+export const fetchRegister = (name, email, password) => axios.post(`http://localhost:5001/api/users/register`, {name, email, password});
+
+
+
 
 
 
