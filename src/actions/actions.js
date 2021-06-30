@@ -38,8 +38,30 @@ import * as api from '../api/api'
     }
   };
 
-
   export const removeFromCart = (productId) => (dispatch, getState) => {
     dispatch({ type: 'REMOVE_CART', payload: productId });
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
   };
+
+  
+export const signin = (email, password) => async (dispatch) => {
+  dispatch({ type: 'USER_SIGNIN', payload: { email, password } });
+  try {
+    const { data } = await api.fetchSignin(email, password);
+    dispatch({ type: 'USER_SIGNIN_SUCCESS', payload: data });
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: 'USER_SIGNIN_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const signout = () => (dispatch) => {
+  localStorage.removeItem('userInfo');
+  localStorage.removeItem('cartItems');
+  dispatch({ type: 'USER_SIGNOUT' });
+};
