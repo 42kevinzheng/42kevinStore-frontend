@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addToCart, removeFromCart } from '../actions/actions';
+import { addToCart, removeFromCart } from '../actions/actions2';
+
 export default function CartScreen(props) {
   const productId = props.match.params.id;
   const qty = props.location.search
@@ -17,7 +18,8 @@ export default function CartScreen(props) {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));  
+    // delete action
+    dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
@@ -28,7 +30,7 @@ export default function CartScreen(props) {
       <div className="col-2">
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
-        <Link to="/">Go Shopping</Link>
+          <Link to="/">Go Shopping</Link>
         ) : (
           <ul>
             {cartItems.map((item) => (
@@ -42,7 +44,7 @@ export default function CartScreen(props) {
                     ></img>
                   </div>
                   <div className="min-30">
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link to={`/description/${item.product}`}>{item.name}</Link>
                   </div>
                   <div>
                     <select

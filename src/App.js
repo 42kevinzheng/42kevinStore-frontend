@@ -9,11 +9,14 @@ import RegisterScreen from './routes/Register';
 import ShippingAddressScreen from './routes/ShippingAddress';
 import PaymentMethodScreen from './routes/Payment';
 import PlaceOrderScreen from './routes/PlaceOrder';
+import OrderScreen from './routes/OrderScreen';
+import OrderHistoryScreen from './routes/OrderHistoryScreen';
+import ProfileScreen from './routes/ProfileScreen';
 
 function App() {
   return (
     <BrowserRouter> 
-      <div >
+      <div>
           <Route exact path ="/" component={Home} ></Route>
           <Route path="/description/:id" component={Description}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
@@ -22,6 +25,9 @@ function App() {
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
+          <Route path="/order/:id" component={OrderScreen}></Route>
+          <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route path="/profile" component={ProfileScreen}></Route> 
           <footer className="row center">All right reserved</footer>
       </div>
     </BrowserRouter>

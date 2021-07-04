@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveShippingAddress } from '../actions/actions';
+import { saveShippingAddress } from '../actions/actions2';
 import CheckoutSteps from '../components/Ship';
 
 export default function ShippingAddress(props) {

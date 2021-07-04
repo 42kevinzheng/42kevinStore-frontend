@@ -4,14 +4,15 @@ import Card from './Card/Card';
 import axios from 'axios';
 import useStyles from './styles';
 import { useDispatch,useSelector } from 'react-redux';
-import {getProducts} from '../../actions/actions';
+import {listProducts} from '../../actions/actions2';
 
 const Cards = () => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const postss = useSelector((state)=>state.allProducts);
 
+  const productList = useSelector((state)=>state.productList);
+  const {products} = productList;
   const[allPokemons, setAllPokemons] = useState([])
   const [movie, setMovie] = useState([]);
 
@@ -37,7 +38,7 @@ const fetchData = async () =>{
 useEffect(() => {
  getAllPokemons();
  fetchData();
- dispatch(getProducts());
+ dispatch(listProducts());
 }, [dispatch])
 
   return (
@@ -61,7 +62,7 @@ useEffect(() => {
         </Grid>
 
         <Grid container justify="center" spacing={4}>
-        {postss.map((product) => (
+        {products.map((product) => (
           <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
             <Card 
             product={product} 

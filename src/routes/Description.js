@@ -2,26 +2,29 @@ import React, {useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/Navbar/Navbar';
-import { detailProduct } from '../actions/actions';
+import { detailsProduct } from '../actions/actions2';
 
-const Description = (products) => {
+const Description = (props) => {
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
-  const _id = products.location.state.product._id;
-  const product = useSelector((state)=>state.product);
+  const _id =  props.match.params.id;
+  const products = useSelector((state)=>state.productDetails);
+  const {product} = products;
 
-  const dis = products.location.state.dis||product.description;
-  const image = products.location.state.image||product.image;
-  const name = products.location.state.name||product.name;
-  const price = products.location.state.price||product.price;
+
+  const dis = product.description;
+  const image = product.image;
+  const name = product.name;
+  const price = product.price;
+
 
 
     useEffect(()=>{
-        dispatch(detailProduct(_id));
+        dispatch(detailsProduct(_id));
     },[dispatch, _id])
 
     const addToCartHandler = () => {
-      products.history.push(`/cart/${_id}?qty=${qty}`);
+      props.history.push(`/cart/${_id}?qty=${qty}`);
     };
 
     return (

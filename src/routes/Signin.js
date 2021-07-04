@@ -30,7 +30,8 @@ export default function SigninScreen(props) {
         <div>
           <h1>Sign In</h1>
         </div>
-
+        {loading }
+        {error }
         <div>
           <label htmlFor="email">Email address</label>
           <input
@@ -60,10 +61,11 @@ export default function SigninScreen(props) {
         <div>
           <label />
           <div>
-          New customer?{' '}
+            New customer?{' '}
             <Link to={`/register?redirect=${redirect}`}>
               Create your account
-            </Link>          </div>
+            </Link>
+          </div>
         </div>
       </form>
     </div>
