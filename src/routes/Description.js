@@ -17,7 +17,7 @@ const Description = (props) => {
   const name = product.name;
   const price = product.price;
 
-
+console.log('is this working?', product);
 
     useEffect(()=>{
         dispatch(detailsProduct(_id));
