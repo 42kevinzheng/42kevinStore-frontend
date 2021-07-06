@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, payOrder  } from '../actions/actions2';
+import { deliverOrder, detailsOrder, payOrder } from '../actions/actions2';
 import Axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
+
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
-  const dispatch = useDispatch();
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const orderPay = useSelector((state) => state.orderPay);
   const {
     loading: loadingPay,
     error: errorPay,
     success: successPay,
   } = orderPay;
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const {
+    loading: loadingDeliver,
+    error: errorDeliver,
+    success: successDeliver,
+  } = orderDeliver;
+  const dispatch = useDispatch();
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data } = await Axios.get('/api/config/paypal');
@@ -29,7 +39,14 @@ export default function OrderScreen(props) {
       };
       document.body.appendChild(script);
     };
-    if (!order) {
+    if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      (order && order._id !== orderId)
+    ) {
+      dispatch({ type: 'ORDER_PAY_RESET' });
+      dispatch({ type: 'ORDER_DELIVER_RESET' });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -40,16 +57,21 @@ export default function OrderScreen(props) {
         }
       }
     }
-  }, [dispatch, order, orderId, sdkReady]);
+}, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
-  const successPaymentHnadler = () => {
-    // TODO: dispatch pay order
+
+
+  const successPaymentHandler = (paymentResult) => {
+    dispatch(payOrder(order, paymentResult));
+  };
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order._id));
   };
 
   return loading ? (
     <div className="loading">
-    <i className="fa fa-spinner fa-spin"></i> Loading...
-  </div>
+        <i className="fa fa-spinner fa-spin"></i> Loading...
+        </div>
   ) : error ? (
     {error}
   ) : (
@@ -68,7 +90,7 @@ export default function OrderScreen(props) {
                   {order.shippingAddress.postalCode},
                   {order.shippingAddress.country}
                 </p>
-             
+              
               </div>
             </li>
             <li>
@@ -77,7 +99,7 @@ export default function OrderScreen(props) {
                 <p>
                   <strong>Method:</strong> {order.paymentMethod}
                 </p>
-             
+              
               </div>
             </li>
             <li>
@@ -150,13 +172,39 @@ export default function OrderScreen(props) {
                   {sdkReady ? (
                     <div className="loading">
                     <i className="fa fa-spinner fa-spin"></i> Loading...
-                  </div>
+                    </div>
                   ) : (
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHnadler}
-                    ></PayPalButton>
+                    <>
+                      {errorPay && (
+                        {errorPay}
+                      )}
+                      {loadingPay && <div className="loading">
+        <i className="fa fa-spinner fa-spin"></i> Loading...
+        </div>}
+
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        onSuccess={successPaymentHandler}
+                      ></PayPalButton>
+                    </>
                   )}
+                </li>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <li>
+                  {loadingDeliver && <div className="loading">
+        <i className="fa fa-spinner fa-spin"></i> Loading...
+        </div>}
+                  {errorDeliver && (
+                    {errorDeliver}
+                  )}
+                  <button
+                    type="button"
+                    className="primary block"
+                    onClick={deliverHandler}
+                  >
+                    Deliver Order
+                  </button>
                 </li>
               )}
             </ul>

@@ -16,12 +16,18 @@ import ProductListScreen from './routes/ProductList';
 import ProductEditScreen from './routes/ProductEdit';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
+import OrderListScreen from './routes/OrderListScreen';
+import UserListScreen from './routes/UserListScreen';
+import UserEditScreen from './routes/UserEditScreen';
+import SellerRoute from './components/SellerRoute';
+import SellerScreen from './routes/SellerScreen';
 
 function App() {
   return (
     <BrowserRouter> 
       <div>
-          <Route exact path ="/" component={Home} ></Route>
+      <Route path="/seller/:id" component={SellerScreen}></Route>         
+       <Route exact path ="/" component={Home} ></Route>
           <Route path="/description/:id" component={Description}></Route>
           <Route
             path="/description/:id/edit"
@@ -37,6 +43,7 @@ function App() {
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
 
+          
           <PrivateRoute
             path="/profile"
             component={ProfileScreen}
@@ -44,9 +51,26 @@ function App() {
           <AdminRoute
             path="/productlist"
             component={ProductListScreen}
+            exact
           ></AdminRoute>
-
-
+          <AdminRoute
+            path="/orderlist"
+            component={OrderListScreen}
+            exact
+          ></AdminRoute>
+          <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
+          <AdminRoute
+            path="/user/:id/edit"
+            component={UserEditScreen}
+          ></AdminRoute>
+          <SellerRoute
+            path="/productlist/seller"
+            component={ProductListScreen}
+          ></SellerRoute>
+          <SellerRoute
+            path="/orderlist/seller"
+            component={OrderListScreen}
+          ></SellerRoute>
 
           <footer className="row center">All right reserved</footer>
       </div>

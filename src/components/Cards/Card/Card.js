@@ -5,7 +5,7 @@ import Rating from "@material-ui/lab/Rating";
 import { Link } from 'react-router-dom';
 import useStyles from './styles';
 
-const GenerticCards = ({ product, onAddToCart, image, name, type, title, price, rating,dis  }) => {
+const GenerticCards = ({ product, onAddToCart, image, name, type, title, price, rating,dis}) => {
   const classes = useStyles();
 
   if(rating >5)
@@ -20,6 +20,15 @@ const GenerticCards = ({ product, onAddToCart, image, name, type, title, price, 
   {
     rating = rating/4;
   }
+
+  const _id =  product._id;
+
+  const sellerId = product.seller || '00000';
+  const sellerName =  sellerId.seller || "none";
+
+  const addToCartHandler = () => {
+    product.history.push(`/cart/${_id}?qty=${1}`);
+  };
 
   return (
     <Card className={classes.root}>
@@ -50,13 +59,17 @@ const GenerticCards = ({ product, onAddToCart, image, name, type, title, price, 
           </Typography>
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
+        
         <IconButton aria-label="Add to Cart">
-        <AddShoppingCart fontSize='large'/>
+        <AddShoppingCart   onClick={addToCartHandler} fontSize='large' />
+
         </IconButton>
         <Typography gutterBottom variant="h5" component="legend">
-        <a href="product.html">
-        Store Name
-            </a>
+
+            <Link to={`/seller/${sellerId._id}`}>
+           {sellerName.name || '[Store Name]'}
+            </Link>
+
           </Typography>
       </CardActions>
     </Card>

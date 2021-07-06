@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProduct, listProducts } from '../actions/actions2';
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from '../actions/actions2';
 
 
 export default function ProductListScreen(props) {
+  const sellerMode = props.match.path.indexOf('/seller') >= 0;
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
@@ -14,16 +19,39 @@ export default function ProductListScreen(props) {
     success: successCreate,
     product: createdProduct,
   } = productCreate;
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
   const dispatch = useDispatch();
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: 'PRODUCT_CREATE_RESET' });
       props.history.push(`/description/${createdProduct._id}/edit`);
     }
-    dispatch(listProducts());
-  }, [createdProduct, dispatch, props.history, successCreate]);
-  const deleteHandler = () => {
-    /// TODO: dispatch delete action
+    if (successDelete) {
+      dispatch({ type: 'PRODUCT_DELETE_RESET' });
+    }
+    dispatch(listProducts({ seller: sellerMode ? userInfo._id : '' }));
+  }, [
+    createdProduct,
+    dispatch,
+    props.history,
+    sellerMode,
+    successCreate,
+    successDelete,
+    userInfo._id,
+  ]);
+
+  const deleteHandler = (product) => {
+    if (window.confirm('Are you sure to delete?')) {
+      dispatch(deleteProduct(product._id));
+    }
   };
   const createHandler = () => {
     dispatch(createProduct());
@@ -36,16 +64,22 @@ export default function ProductListScreen(props) {
           Create Product
         </button>
       </div>
-      {loadingCreate && <div className="loading">
-        <i className="fa fa-spinner fa-spin"></i> Loading...
-        </div>}
+
+      {loadingDelete &&   <div className="loading">
+          <i className="fa fa-spinner fa-spin"></i> Loading...
+          </div>}
+      {errorDelete && {errorDelete}}
+
+      {loadingCreate &&   <div className="loading">
+          <i className="fa fa-spinner fa-spin"></i> Loading...
+          </div>}
       {errorCreate && {errorCreate}}
       {loading ? (
-       <div className="loading">
-       <i className="fa fa-spinner fa-spin"></i> Loading...
-       </div>
+          <div className="loading">
+          <i className="fa fa-spinner fa-spin"></i> Loading...
+          </div>
       ) : error ? (
-      {error}
+        {error}
       ) : (
         <table className="table">
           <thead>

@@ -1,8 +1,5 @@
 import Axios from 'axios';
 
-
-
-
 export const addToCart = (productId, qty) => async (dispatch, getState) => {
   const { data } = await Axios.get(`http://localhost:5001/api/products/${productId}`);
   dispatch({
@@ -13,6 +10,7 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
       price: data.price,
       countInStock: data.countInStock,
       product: data._id,
+      seller: data.seller,
       qty,
     },
   });
@@ -122,12 +120,13 @@ export const listOrderMine = () => async (dispatch, getState) => {
 
 
 
-export const listProducts = () => async (dispatch) => {
+
+export const listProducts = ({ seller = '' }) => async (dispatch) => {
   dispatch({
     type: 'PRODUCT_LIST_REQUEST',
   });
   try {
-    const { data } = await Axios.get('http://localhost:5001/api/products');
+    const { data } = await Axios.get(`http://localhost:5001/api/products?seller=${seller}`);
     dispatch({ type: 'PRODUCT_LIST_SUCCESS', payload: data });
   } catch (error) {
     dispatch({ type: 'PRODUCT_LIST_FAIL', payload: error.message });
@@ -221,7 +220,9 @@ export const signout = () => (dispatch) => {
   localStorage.removeItem('cartItems');
   localStorage.removeItem('shippingAddress');
   dispatch({ type: 'USER_SIGNOUT' });
+  document.location.href = '/signin';
 };
+
 export const detailsUser = (userId) => async (dispatch, getState) => {
   dispatch({ type: 'USER_DETAILS_REQUEST', payload: userId });
   const {
@@ -277,5 +278,168 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: 'PRODUCT_UPDATE_FAIL', error: message });
+  }
+};
+
+
+
+export const deleteProduct = (productId) => async (dispatch, getState) => {
+  dispatch({ type: 'PRODUCT_DELETE_REQUEST', payload: productId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.delete(`http://localhost:5001/api/products/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: 'PRODUCT_DELETE_SUCCESS' });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'PRODUCT_DELETE_FAIL', payload: message });
+  }
+};
+
+
+
+
+export const deleteOrder = (orderId) => async (dispatch, getState) => {
+  dispatch({ type: 'ORDER_DELETE_REQUEST', payload: orderId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.delete(`http://localhost:5001/api/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: 'ORDER_DELETE_SUCCESS', payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'ORDER_DELETE_FAIL', payload: message });
+  }
+};
+
+export const deliverOrder = (orderId) => async (dispatch, getState) => {
+  dispatch({ type: 'ORDER_DELIVER_REQUEST', payload: orderId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.put(
+      `http://localhost:5001/api/orders/${orderId}/deliver`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      }
+    );
+    dispatch({ type: 'ORDER_DELIVER_SUCCESS', payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'ORDER_DELIVER_FAIL', payload: message });
+  }
+};
+
+
+
+export const listUsers = () => async (dispatch, getState) => {
+  dispatch({ type: 'USER_LIST_REQUEST' });
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    const { data } = await Axios.get('http://localhost:5001/api/users', {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: 'USER_LIST_SUCCESS', payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'USER_LIST_FAIL', payload: message });
+  }
+};
+
+export const deleteUser = (userId) => async (dispatch, getState) => {
+  dispatch({ type: 'USER_DELETE_REQUEST', payload: userId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.delete(`http://localhost:5001/api/users/${userId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: 'USER_DELETE_SUCCESS', payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'USER_DELETE_FAIL', payload: message });
+  }
+};
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  dispatch({ type: 'USER_UPDATE_PROFILE_REQUEST', payload: user });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(`http://localhost:5001/api/users/${user._id}`, user, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: 'USER_UPDATE_SUCCESS', payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'USER_UPDATE_FAIL', payload: message });
+  }
+};
+
+
+export const listOrders = ({ seller = '' }) => async (dispatch, getState) => {
+  dispatch({ type: 'ORDER_LIST_REQUEST' });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get(`http://localhost:5001/api/orders?seller=${seller}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    console.log(data);
+    dispatch({ type: 'ORDER_LIST_SUCCESS', payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'ORDER_LIST_FAIL', payload: message });
+  }
+};
+
+
+export const listTopSellers = () => async (dispatch) => {
+  dispatch({ type: 'USER_TOPSELLERS_LIST_REQUEST' });
+  try {
+    const { data } = await Axios.get('http://localhost:5001/api/users/top-sellers');
+    dispatch({ type: 'USER_TOPSELLERS_LIST_SUCCESS', payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: 'USER_TOPSELLERS_LIST_FAIL', payload: message });
   }
 };

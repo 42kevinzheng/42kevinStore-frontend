@@ -16,12 +16,17 @@ const Description = (props) => {
   const image = product.image;
   const name = product.name;
   const price = product.price;
+  const sellerId = product.seller || '00000';
+  const sellerName =  sellerId.seller || "none";
 
-console.log('is this working?', product);
 
     useEffect(()=>{
         dispatch(detailsProduct(_id));
     },[dispatch, _id])
+
+
+console.log("this is for seller ", product.seller)
+
 
     const addToCartHandler = () => {
       props.history.push(`/cart/${_id}?qty=${qty}`);
@@ -51,6 +56,14 @@ console.log('is this working?', product);
         <div className="col-1">
           <div className="card card-body">
             <ul>
+                  <li>
+                    <h2>
+                      <Link to={`/seller/${sellerId._id}`}>
+                        {sellerName.name || "[Seller Store]"}
+                      </Link>
+                    </h2>
+                   
+                  </li>
               <li>
                 <div className="row">
                   <div>Price</div>

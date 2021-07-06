@@ -14,6 +14,14 @@ import {
     userUpdateProfileReducer,
     productCreateReducer,
     productUpdateReducer,
+    productDeleteReducer,
+    orderListReducer,
+    orderDeleteReducer,
+    orderDeliverReducer,
+    userListReducer,
+    userDeleteReducer,
+    userUpdateReducer,
+    userTopSellerListReducer,
 } from './reducers/reducers';
 
 const initialState = {
@@ -47,6 +55,14 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
+  productDelete: productDeleteReducer,
+  orderList: orderListReducer,
+  orderDelete: orderDeleteReducer,
+  orderDeliver: orderDeliverReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
+  userUpdate: userUpdateReducer,
+  userTopSellersList: userTopSellerListReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

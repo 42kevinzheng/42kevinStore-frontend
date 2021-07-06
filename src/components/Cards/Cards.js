@@ -4,7 +4,10 @@ import Card from './Card/Card';
 import axios from 'axios';
 import useStyles from './styles';
 import { useDispatch,useSelector } from 'react-redux';
-import {listProducts} from '../../actions/actions2';
+import {listProducts, listTopSellers} from '../../actions/actions2';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
+import { Link } from 'react-router-dom';
 
 const Cards = () => {
 
@@ -38,7 +41,7 @@ const fetchData = async () =>{
 useEffect(() => {
  getAllPokemons();
  fetchData();
- dispatch(listProducts());
+ dispatch(listProducts({}));
 }, [dispatch])
 
   return (

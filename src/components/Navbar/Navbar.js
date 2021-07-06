@@ -43,6 +43,9 @@ const Navbar = () => {
           </IconButton>
         </div>
 
+      
+
+            
         {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <Link to="#admin">
@@ -65,9 +68,28 @@ const Navbar = () => {
               </div>
             )}
 
+      {userInfo && userInfo.isSeller && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Seller <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/productlist/seller">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+
+
+
         {userInfo ? (
               <div className="dropdown">
-                <Link to="#">
+                <Link to="/profile">
                   {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
                 </Link>
                 <ul className="dropdown-content">
