@@ -30,8 +30,6 @@ export const savePaymentMethod = (data) => (dispatch) => {
   dispatch({ type: 'CART_SAVE_PAYMENT_METHOD', payload: data });
 };
 
-
-
 export const createOrder = (order) => async (dispatch, getState) => {
   dispatch({ type: 'ORDER_CREATE_REQUEST', payload: order });
   try {
@@ -118,15 +116,16 @@ export const listOrderMine = () => async (dispatch, getState) => {
   }
 };
 
-
-
-
-export const listProducts = ({ seller = '' }) => async (dispatch) => {
+export const listProducts = ({ seller = '', name = '' }) => async (
+  dispatch
+) => {
   dispatch({
     type: 'PRODUCT_LIST_REQUEST',
   });
   try {
-    const { data } = await Axios.get(`http://localhost:5001/api/products?seller=${seller}`);
+    const { data } = await Axios.get(
+      `http://localhost:5001/api/products?seller=${seller}&name=${name}`
+    );
     dispatch({ type: 'PRODUCT_LIST_SUCCESS', payload: data });
   } catch (error) {
     dispatch({ type: 'PRODUCT_LIST_FAIL', payload: error.message });
