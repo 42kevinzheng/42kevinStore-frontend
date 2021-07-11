@@ -6,6 +6,9 @@ import logo from './store.png';
 import { useDispatch, useSelector } from 'react-redux';
 import {signout} from '../../actions/actions';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
+import SearchBox from '../SearchBox';
+import SideBar from '../SideBar';
+
 
 
 const Navbar = () => {
@@ -25,14 +28,41 @@ const Navbar = () => {
 
 
 
-
       <AppBar position="fixed" className={classes.appBar} color="inherit">
       <Toolbar>
+      <SideBar/>
+
         <Typography  variant="h6" className={classes.title} color="inherit">
-          <img src={logo} alt="df" height="80px" className={classes.image} />KEVIN
+        <Link to="/">
+          <img src={logo} alt="df" height="80px" className={classes.image}/>
+          </Link>
+          
+          <Link to="/">Kevin</Link>
         </Typography>
         <div className={classes.grow} />
+
+
+
+
+
         <div>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
+          </div>
+
+
+
+
+        <div>
+
+
+
+
+
+
           <IconButton aria-label="Show cart items" color="inherit">
           <Link to="/cart">
 
@@ -70,7 +100,7 @@ const Navbar = () => {
 
       {userInfo && userInfo.isSeller && (
               <div className="dropdown">
-                <Link to="#admin">
+                <Link to="#seller">
                   Seller <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
@@ -89,10 +119,15 @@ const Navbar = () => {
 
         {userInfo ? (
               <div className="dropdown">
-                <Link to="/profile">
+                <Link to="#">
                   {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
                 </Link>
                 <ul className="dropdown-content">
+                <li>
+                    <Link to="/profile">
+                      Profile
+                    </Link>
+                  </li>
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
                       Sign Out
