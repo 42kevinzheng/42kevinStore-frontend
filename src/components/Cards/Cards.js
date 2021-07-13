@@ -16,6 +16,8 @@ const Cards = () => {
 
   const productList = useSelector((state)=>state.productList);
   const {products} = productList;
+
+  
   const[allPokemons, setAllPokemons] = useState([])
   const [movie, setMovie] = useState([]);
 

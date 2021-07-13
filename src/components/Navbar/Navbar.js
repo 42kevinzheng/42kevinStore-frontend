@@ -5,11 +5,9 @@ import useStyles from './styles';
 import logo from './store.png';
 import { useDispatch, useSelector } from 'react-redux';
 import {signout} from '../../actions/actions';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import SearchBox from '../SearchBox';
 import SideBar from '../SideBar';
-
-
 
 const Navbar = () => {
   const classes = useStyles();
@@ -24,27 +22,16 @@ const Navbar = () => {
 
   return (
     <div>
-
-
-
-
       <AppBar position="fixed" className={classes.appBar} color="inherit">
       <Toolbar>
       <SideBar/>
-
         <Typography  variant="h6" className={classes.title} color="inherit">
         <Link to="/">
-          <img src={logo} alt="df" height="80px" className={classes.image}/>
+          <img src={logo} alt="Dafault Logo" height="70px" className={classes.image}/>
           </Link>
-          
           <Link to="/">Kevin</Link>
         </Typography>
         <div className={classes.grow} />
-
-
-
-
-
         <div>
             <Route
               render={({ history }) => (
@@ -52,30 +39,15 @@ const Navbar = () => {
               )}
             ></Route>
           </div>
-
-
-
-
         <div>
-
-
-
-
-
-
           <IconButton aria-label="Show cart items" color="inherit">
           <Link to="/cart">
-
             <Badge badgeContent={cartItems.length > 0? cartItems.length:0} color="secondary">
               <ShoppingCart />
             </Badge>
             </Link>
           </IconButton>
         </div>
-
-      
-
-            
         {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <Link to="#admin">
@@ -97,7 +69,6 @@ const Navbar = () => {
                 </ul>
               </div>
             )}
-
       {userInfo && userInfo.isSeller && (
               <div className="dropdown">
                 <Link to="#seller">
@@ -113,10 +84,6 @@ const Navbar = () => {
                 </ul>
               </div>
             )}
-
-
-
-
         {userInfo ? (
               <div className="dropdown">
                 <Link to="#">
@@ -138,8 +105,6 @@ const Navbar = () => {
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
-
-
       </Toolbar>
     </AppBar>
     </div>
