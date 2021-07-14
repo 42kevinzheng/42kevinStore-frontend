@@ -6,27 +6,13 @@ import { Link } from 'react-router-dom';
 import { useHistory } from "react-router";
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
-
 import { addToCart } from '../../../actions/actions2';
 
 
-const GenerticCards = ({ product, image, name, title, price, rating, dis}) => {
+const GenerticCards = ({ product, image, name, price, rating}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-
-  if(rating >5)
-  {
-    rating = rating/2;
-  }
-  else if(rating>10)
-  {
-    rating = rating/3;
-  }
-  else if (rating>100)
-  {
-    rating = rating/4;
-  }
   const history = useHistory();
   const _id =  product._id;
 
@@ -37,27 +23,15 @@ const GenerticCards = ({ product, image, name, title, price, rating, dis}) => {
     dispatch(addToCart(_id, 1));
   };
 
-
-  
-
   return (
     <Card className={classes.root}>
       <CardMedia className={classes.media} image={image} title={name} />
       <CardContent>
         <div className={classes.cardContent}>
-        <Typography gutterBottom variant="h5" component="h2">
-						<Link to= {{ pathname:`/description/${product.id||product._id}`, 
-            state: {
-              product,
-              image:image,
-              name:name,
-              title:title,
-              price:price,
-              dis:dis,
-            } 
-            }} > 
-              {name} 
-              </Link>
+          <Typography gutterBottom variant="h5" component="h2">
+                <Link to= {{ pathname:`/description/${product.id||product._id}`}}> 
+                  {name} 
+                </Link>
             </Typography>
           <Typography gutterBottom variant="h5" component="h2">
             {price}
@@ -67,21 +41,18 @@ const GenerticCards = ({ product, image, name, title, price, rating, dis}) => {
           <Rating name="half-rating" defaultValue={1} value={rating} precision={0.5} readOnly/> {rating}
           </Typography>
       </CardContent>
+
       <CardActions disableSpacing className={classes.cardActions}>
-        
         <IconButton aria-label="Add to Cart">
-        <AddShoppingCart   
+        <AddShoppingCart
         onClick={addToCartHandler} 
         fontSize='large' 
         />
-
         </IconButton>
         <Typography gutterBottom variant="h5" component="legend">
-
             <Link to={`/seller/${sellerId._id}`}>
-           {sellerName.name || '[Store Name]'}
+          {sellerName.name || '[Store Name]'}
             </Link>
-
           </Typography>
       </CardActions>
     </Card>

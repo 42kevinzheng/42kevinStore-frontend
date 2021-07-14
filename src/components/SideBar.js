@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Link } from 'react-router-dom';
-
 import { listProductCategories } from '../actions/actions2';
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
 
 const SideBar = () => {
 
-      
   const dispatch = useDispatch();
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const productCategoryList = useSelector((state) => state.productCategoryList);
@@ -21,28 +21,21 @@ const SideBar = () => {
 
     return (
         <div>
-            <button
-              type="button"
-              className="open-sidebar"
-              onClick={() => setSidebarIsOpen(true)}
-            >
-              <i className="fa fa-bars"></i>
+            <button type="button" onClick={() => setSidebarIsOpen(true)} >
+              <MenuIcon/>
             </button>
             <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
               <strong>Categories</strong>
               <button
-                onClick={() => setSidebarIsOpen(false)}
-                className="close-sidebar"
-                type="button"
-              >
-                <i className="fa fa-close"></i>
+                onClick={() => setSidebarIsOpen(false)} type="button" >
+                <CloseIcon/>
               </button>
             </li>
             {loadingCategories ? (
           <div className="loading">
-          <i className="fa fa-spinner fa-spin"></i> Loading...
+            Loading...
           </div>
             ) : errorCategories ? (
           {errorCategories}

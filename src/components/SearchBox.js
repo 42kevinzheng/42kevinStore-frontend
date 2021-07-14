@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SearchIcon from '@material-ui/icons/Search';
 
 export default function SearchBox(props) {
   const [name, setName] = useState('');
@@ -8,17 +9,19 @@ export default function SearchBox(props) {
   };
   return (
     <form className="search" onSubmit={submitHandler}>
-      <div className="row">
+      <div>
         <input
           type="text"
           name="q"
           id="q"
           onChange={(e) => setName(e.target.value)}
-        ></input>
-        <button className="primary" type="submit">
-          <i className="fa fa-search"></i>
+          style={{width:"300px", height:'20px'}}
+        >
+        </input>
+        <button type="submit">
+        <SearchIcon style={{height: 18}} />
         </button>
       </div>
-    </form>
+  </form>
   );
 }

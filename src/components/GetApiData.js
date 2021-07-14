@@ -21,7 +21,9 @@ const GetApiData = () => {
   }
   
   const fetchData = async () =>{
-    const {data} = await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=64754b85c71d637fa51274bc8a1288a4`);
+    const {data} = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=64754b85c71d637fa51274bc8a1288a4`);
+    //https://api.themoviedb.org/3/discover/movie?api_key=64754b85c71d637fa51274bc8a1288a4
+    //https://api.themoviedb.org/3/trending/all/day?api_key=64754b85c71d637fa51274bc8a1288a4
     setMovie(data.results);
   }
   
@@ -75,24 +77,19 @@ const GetApiData = () => {
               <p>
               {
               `{  name: '${pokemonStats.original_title || pokemonStats.name}',
-                  category: '${product.media_type}',
+                  category: 'Pokemon',
                   image: '${pokemonStats.sprites.other.dream_world.front_default}',
-                  price: '${product.vote_count}', 
-                  countInStock: '${Math.floor(product.popularity)}',
-                  brand: '${product.media_type}',
-                  rating: '${pokemonStats.base_experience}',    
-                  numReviews: '${product.vote_count}',
-                  description: '${product.overview}',
+                  price: '${pokemonStats.base_experience}', 
+                  countInStock: '${Math.floor(pokemonStats.height)}',
+                  brand: 'Pokemon',
+                  rating: '0',    
+                  numReviews: '0',
+                  description: '${pokemonStats.types[0].type.name}',
               },`
               }
               </p>
           ))} */}
 
-
-
-
-
-            
         </div>
     )
 }
