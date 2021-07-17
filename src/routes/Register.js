@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { register } from '../actions/actions';
+import { register } from '../actions/actions2';
 
 export default function Register(props) {
   const [name, setName] = useState('');

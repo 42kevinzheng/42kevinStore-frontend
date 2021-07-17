@@ -26,7 +26,7 @@ useEffect(() => {
             <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
               <Card 
               product={product} 
-              image = {product.image}
+              image = {product.image[0]}
               title = {''}
               name = {product.name}
               price ={product.price}

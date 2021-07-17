@@ -18,7 +18,6 @@ export default function CartScreen(props) {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    // delete action
     dispatch(removeFromCart(id));
   };
 
@@ -27,6 +26,10 @@ export default function CartScreen(props) {
   };
   return (
     <div className="row top">
+
+
+
+
       <div className="col-2">
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
@@ -77,8 +80,12 @@ export default function CartScreen(props) {
           </ul>
         )}
       </div>
+
+
+
+
       <div className="col-1">
-        <div className="card card-body">
+        <div className="checkoutBox">
           <ul>
             <li>
               <h2>
@@ -99,6 +106,8 @@ export default function CartScreen(props) {
           </ul>
         </div>
       </div>
+
+
     </div>
   );
 }

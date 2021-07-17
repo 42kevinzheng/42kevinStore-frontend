@@ -15,6 +15,7 @@ function Footer() {
 
   return (
     <div className="main-footer">
+      <hr/>
       <div className="container">
         <div className="row" style={{justifyContent:'center'}}>
           <div className="col">
@@ -46,7 +47,6 @@ function Footer() {
             </ui>
           </div>
 
-
           <div className="col" style={{marginRight: 40}}>
             <h4>Future Features (In Progress)</h4>
             <ui className="list-unstyled">
@@ -56,8 +56,6 @@ function Footer() {
             </ui>
           </div>
           </div>
-
-       
         <hr />
         <div className="row" style={{justifyContent:'center'}}>
           <p className="col-sm">

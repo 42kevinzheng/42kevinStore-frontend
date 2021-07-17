@@ -1,14 +1,15 @@
 import React from 'react';
 import Cards from '../components/Cards/Cards';
-import Navbar from '../components/Navbar/Navbar';
-
+import Banner from '../components/Banners';
 
 const Home = () => {
 
 
     return (
-        <div>
-            <Navbar/>
+        <div>   
+    <h2>Top Sellers</h2>
+        <Banner/>
+<h2>Featured Products</h2>
             <Cards/>
         </div>
     )

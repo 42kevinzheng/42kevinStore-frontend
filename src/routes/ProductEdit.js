@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsProduct, updateProduct } from '../actions/actions2';
 import Axios from 'axios';
+import FileBase from 'react-file-base64';
+
 
 
 
@@ -9,7 +11,7 @@ export default function ProductEditScreen(props) {
   const productId = props.match.params.id;
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState([]);
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [brand, setBrand] = useState('');
@@ -45,7 +47,6 @@ export default function ProductEditScreen(props) {
   }, [product, dispatch, productId, successUpdate, props.history]);
   const submitHandler = (e) => {
     e.preventDefault();
-    // TODO: dispatch update product
     dispatch(
       updateProduct({
         _id: productId,
@@ -64,25 +65,6 @@ export default function ProductEditScreen(props) {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
-    const bodyFormData = new FormData();
-    bodyFormData.append('image', file);
-    setLoadingUpload(true);
-    try {
-      const { data } = await Axios.post('http://localhost:5001/api/api/uploads', bodyFormData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      });
-      setImage(data);
-      setLoadingUpload(false);
-    } catch (error) {
-      setErrorUpload(error.message);
-      setLoadingUpload(false);
-    }
-  };
 
   return (
     <div>
@@ -91,12 +73,12 @@ export default function ProductEditScreen(props) {
           <h1>Edit Product {productId}</h1>
         </div>
         {loadingUpdate && <div className="loading">
-       <i className="fa fa-spinner fa-spin"></i> Loading...
+        Loading...
        </div>}
         {errorUpdate && {errorUpdate}}
         {loading ? (
           <div className="loading">
-          <i className="fa fa-spinner fa-spin"></i> Loading...
+          Loading...
           </div>
         ) : error ? (
         {error}
@@ -133,13 +115,26 @@ export default function ProductEditScreen(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="imageFile">Image File</label>
-              <input
-                type="file"
-                id="imageFile"
-                label="Choose Image"
-                onChange={uploadFileHandler}
-              ></input>
+
+              <label htmlFor="imagedFile">Image File</label>
+{/* 
+              <input type="file" multiple={true} onChange= {(base64)  => {
+                    const file = [];
+                    for(let i =0; i < base64.length; i++)
+                    {
+                      file.push(base64[i].base64);
+                    }
+                    setImage(file);                
+                  }}/>  */}
+
+                <FileBase type="file" multiple={true} onDone={ (base64)  => {
+                    const file = [];
+                    for(let i =0; i < base64.length; i++)
+                    {
+                      file.push(base64[i].base64);
+                    }
+                    setImage(file);                
+                  }} />
               {loadingUpload &&  <div className="loading">
        <i className="fa fa-spinner fa-spin"></i> Loading...
        </div>}

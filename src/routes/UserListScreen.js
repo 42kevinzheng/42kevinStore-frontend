@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listUsers, deleteUser } from '../actions/actions2';
 
-
 export default function UserListScreen(props) {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
@@ -30,14 +29,14 @@ export default function UserListScreen(props) {
     <div>
       <h1>Users</h1>
       {loadingDelete && <div className="loading">
-         <i className="fa fa-spinner fa-spin"></i> Loading...
-         </div>}
+        <i className="fa fa-spinner fa-spin"></i> Loading...
+        </div>}
       {errorDelete && {errorDelete}}
       {successDelete }
       {loading ? (
-         <div className="loading">
-         <i className="fa fa-spinner fa-spin"></i> Loading...
-         </div>
+        <div className="loading">
+        <i className="fa fa-spinner fa-spin"></i> Loading...
+        </div>
       ) : error ? (
         {error}
         ) : (
