@@ -8,18 +8,18 @@ export default function SearchBox(props) {
     props.history.push(`/search/name/${name}`);
   };
   return (
-    <form className="search" onSubmit={submitHandler}>
+    <form onSubmit={submitHandler}>
       <div>
         <input
           type="text"
           name="q"
           id="q"
           onChange={(e) => setName(e.target.value)}
-          style={{width:"300px", height:'20px'}}
+          style={{width:"350px", height:'25px', borderRadius: 4}}
         >
         </input>
         <button type="submit">
-        <SearchIcon style={{height: 18}} />
+        <SearchIcon style={{height: "25px",}} />
         </button>
       </div>
   </form>

@@ -37,20 +37,19 @@ const Navbar = () => {
 
 
         
-        <div style={{ justifyContent:'center'}}>
-            <Route
-              render={({ history }) => (
-                <SearchBox history={history}></SearchBox>
+        <div >
+            <Route render={({ history }) => (
+                <SearchBox history={history} style={{ justifyContent:'center', marginLeft:"200px"}}></SearchBox>
               )}
             ></Route>
-          </div>
+            </div>
 
 
 
 
 
           
-        <div>
+        <div style={{ marginLeft:930}}>
           <IconButton aria-label="Show cart items" color="inherit">
           <Link to="/cart">
             <Badge badgeContent={cartItems.length > 0? cartItems.length:0} color="secondary">
@@ -64,7 +63,7 @@ const Navbar = () => {
         {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <Link to="#admin">
-                  Admin <i className="fa fa-caret-down"></i>
+                  Admin 
                 </Link>
                 <ul className="dropdown-content">
                   <li>
@@ -88,7 +87,7 @@ const Navbar = () => {
       {userInfo && userInfo.isSeller && (
               <div className="dropdown">
                 <Link to="#seller">
-                  Seller <i className="fa fa-caret-down"></i>
+                  Seller 
                 </Link>
                 <ul className="dropdown-content">
                   <li>
@@ -106,7 +105,7 @@ const Navbar = () => {
         {userInfo ? (
               <div className="dropdown">
                 <Link to="#">
-                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                  {userInfo.name} {' '}
                 </Link>
                 <ul className="dropdown-content">
                 <li>

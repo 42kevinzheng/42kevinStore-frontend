@@ -43,9 +43,9 @@ const GenerticCards = ({ product, image, name, price, rating}) => {
       </CardContent>
 
       <CardActions disableSpacing className={classes.cardActions}>
-        <IconButton aria-label="Add to Cart">
+        <IconButton aria-label="Add to Cart"  onClick={addToCartHandler} 
+>
         <AddShoppingCart
-        onClick={addToCartHandler} 
         fontSize='large' 
         />
         </IconButton>

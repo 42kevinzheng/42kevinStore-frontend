@@ -1,9 +1,12 @@
 import React, {useState,useEffect} from "react";
-import "./Footer.css";
 import Axios from 'axios';
+import useStyles from './styles';
+
 
 function Footer() {
     const [details, setDetails] = useState(null);
+    const classes = useStyles();
+
     const getUserGeolocationDetails = async() => {
         const { data } = await Axios.get(`https://geolocation-db.com/json/7bad3e80-c704-11eb-a4bc-19a5c6a04c5d`); 
         setDetails(data);
@@ -14,7 +17,7 @@ function Footer() {
     }, []);
 
   return (
-    <div className="main-footer">
+    <div className={classes.footer}>
       <hr/>
       <div className="container">
         <div className="row" style={{justifyContent:'center'}}>
