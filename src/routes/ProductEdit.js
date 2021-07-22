@@ -129,8 +129,7 @@ export default function ProductEditScreen(props) {
 
                 <FileBase type="file" multiple={true} onDone={ (base64)  => {
                     const file = [];
-                    for(let i =0; i < base64.length; i++)
-                    {
+                    for(let i =0; i < base64.length; i++) {
                       file.push(base64[i].base64);
                     }
                     setImage(file);                

@@ -62,9 +62,7 @@ export default function SearchScreen(props) {
   )}
   <div>
     Sort by{' '}
-    <select
-      value={order}
-      onChange={(e) => {
+    <select value={order} onChange={(e) => {
         props.history.push(getFilterUrl({ order: e.target.value }));
       }}
     >
@@ -80,9 +78,9 @@ export default function SearchScreen(props) {
     <h3>Department</h3>
     <div>
       {loadingCategories ? (
-           <div className="loading">
-           <i className="fa fa-spinner fa-spin"></i> Loading...
-           </div>
+          <div className="loading">
+          <i className="fa fa-spinner fa-spin"></i> Loading...
+          </div>
       ) : errorCategories ? (
         {errorCategories}
       ) : (
@@ -152,13 +150,14 @@ export default function SearchScreen(props) {
       
         <div className="row center">
         {products.map((product) => (
- <Card 
- product={product} 
- image = {product.image}
- title = {''}
- name = {product.name}
- price ={product.price}
- />                ))}
+          <Card 
+          product={product} 
+          image = {product.image}
+          title = {''}
+          name = {product.name}
+          price ={product.price}
+          />                
+          ))}
         </div>
       </>
     )}

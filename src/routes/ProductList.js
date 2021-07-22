@@ -70,7 +70,8 @@ export default function ProductListScreen(props) {
           </div>}
       {errorDelete && {errorDelete}}
 
-      {loadingCreate &&   <div className="loading">
+      {loadingCreate &&   
+      <div className="loading">
           <i className="fa fa-spinner fa-spin"></i> Loading...
           </div>}
       {errorCreate && {errorCreate}}

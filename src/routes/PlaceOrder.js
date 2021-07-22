@@ -4,12 +4,18 @@ import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/Ship';
 import { createOrder } from '../actions/actions2';
 
+import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { Scrollbars } from 'react-custom-scrollbars';
+import useStyles from './styles';
+
 
 export default function PlaceOrder(props) {
     const cart = useSelector((state) => state.cart);
     if (!cart.paymentMethod) {
       props.history.push('/payment');
     }
+    console.log(cart)
     const orderCreate = useSelector((state) => state.orderCreate);
     const { loading, success, error, order } = orderCreate;
     const toPrice = (num) => Number(num.toFixed(2)); 
@@ -29,13 +35,7 @@ export default function PlaceOrder(props) {
         dispatch({ type: 'ORDER_CREATE_RESET' });
       }
     }, [dispatch, order, props.history, success]);
-
-
-
-console.log('this is for the order, ', order);
-
-
-
+    const classes = useStyles();
     return (
       <div>
         <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -62,36 +62,44 @@ console.log('this is for the order, ', order);
                 </div>
               </li>
               <li>
+
                 <div className="card card-body">
                   <h2>Order Items</h2>
-                  <ul>
+                  <div style={{   
+  width: 1800, 
+  height: 1200,
+  borderStyle: 'solid',
+  borderWidth: '5'}} >
+<Scrollbars >
+<Grid container justify="center" spacing={1}>
                     {cart.cartItems.map((item) => (
-                      <li key={item.product}>
-                        <div className="row">
-                          <div>
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="small"
-                            ></img>
-                          </div>
-                          <div className="min-30">
-                            <Link to={`/description/${item.product}`}>
-                              {item.name}
-                            </Link>
-                          </div>
-  
-                          <div>
-                            {item.qty} x ${item.price} = ${item.qty * item.price}
-                          </div>
-                        </div>
-                      </li>
+<Grid item xs={12} sm={6} md={4} lg={3}>
+<Card className={classes.root} style={{  borderStyle: 'solid',}}>
+<CardMedia className={classes.media} image={item.image[0]} title={item.name} />
+<CardContent className={classes.cardContent}>
+<Typography gutterBottom variant="h6" component="h5">
+      <Link to={`/description/${item.product}`}>{item.name}</Link> 
+      </Typography>
+      </CardContent>
+      <Typography  gutterBottom variant="h5" component="legend">
+      {item.qty} x ${item.price} = ${item.qty * item.price}
+      </Typography>
+        <div className={classes.cardContent}>
+      <Typography gutterBottom variant="h5" component="legend" >
+      ${item.price}
+      </Typography>
+      </div>
+</Card>
+</Grid>
                     ))}
-                  </ul>
+</Grid>
+  </Scrollbars>
+</div>
                 </div>
               </li>
             </ul>
           </div>
+
           <div className="col-1">
             <div className="card card-body">
               <ul>
@@ -136,7 +144,6 @@ console.log('this is for the order, ', order);
                     Place Order
                   </button>
                 </li>
-         
               </ul>
             </div>
           </div>

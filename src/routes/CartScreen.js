@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+
 import { addToCart, removeFromCart } from '../actions/actions2';
+import { Scrollbars } from 'react-custom-scrollbars';
+import useStyles from './styles';
+
 
 export default function CartScreen(props) {
   const productId = props.match.params.id;
@@ -10,6 +16,8 @@ export default function CartScreen(props) {
     : 1;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const classes = useStyles();
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (productId) {
@@ -26,57 +34,71 @@ export default function CartScreen(props) {
   };
   return (
     <div className="row top">
-
-
-
-
       <div className="col-2">
+
+
+
         <h1>Shopping Cart</h1>
+        
         {cartItems.length === 0 ? (
           <Link to="/">Go Shopping</Link>
         ) : (
           <ul>
-            {cartItems.map((item) => (
-              <li key={item.product}>
-                <div className="row">
-                  <div>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="small"
-                    ></img>
-                  </div>
-                  <div className="min-30">
-                    <Link to={`/description/${item.product}`}>{item.name}</Link>
-                  </div>
-                  <div>
-                    <select
-                      value={item.qty}
-                      onChange={(e) =>
-                        dispatch(
-                          addToCart(item.product, Number(e.target.value))
-                        )
-                      }
-                    >
-                      {[...Array(item.countInStock).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>${item.price}</div>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => removeFromCartHandler(item.product)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </li>
+     
+
+
+
+                    <div style={{   
+  width: 1800, 
+  height: 1200,
+  borderStyle: 'solid',
+  borderWidth: '5'}} >
+<Scrollbars >
+<Grid container justify="center" spacing={1}>
+{/* <img src={item.image[0]} alt={item.name} style={{height:300, width:300}} ></img> */}
+
+  {cart.cartItems.map((item) => (
+
+    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Card className={classes.root} style={{  borderStyle: 'solid',}}>
+    <CardMedia className={classes.media} image={item.image[0]} title={item.name} />
+    <CardContent className={classes.cardContent}>
+    <Typography gutterBottom variant="h6" component="h5">
+          <Link to={`/description/${item.product}`}>{item.name}</Link> 
+          </Typography>
+          <Typography gutterBottom variant="h6" component="h5">
+          <select value={item.qty} onChange={(e) =>dispatch( addToCart(item.product, Number(e.target.value)) )} >
+            {[...Array(item.countInStock).keys()].map((x) => (
+              <option key={x + 1} value={x + 1}>
+                {x + 1} 
+              </option>
             ))}
+          </select>
+          </Typography>
+          </CardContent>
+          <Typography  gutterBottom variant="h5" component="legend">
+          {item.qty} x ${item.price} = ${item.qty * item.price}
+          </Typography>
+
+            <div className={classes.cardContent}>
+          <Typography gutterBottom variant="h5" component="legend" >
+          ${item.price}
+          </Typography>
+
+          <Typography gutterBottom variant="h5" component="legend" >
+
+          <button type="button" onClick={() => removeFromCartHandler(item.product)}>
+            Delete
+          </button>
+          </Typography>
+          </div>
+    </Card>
+    </Grid>
+  ))}
+              </Grid>
+  </Scrollbars>
+  
+</div>
           </ul>
         )}
       </div>
@@ -111,3 +133,15 @@ export default function CartScreen(props) {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+

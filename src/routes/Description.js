@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/Navbar/Navbar';
 import { detailsProduct } from '../actions/actions2';
+import { Scrollbars } from 'react-custom-scrollbars';
+import useStyles from './styles';
+import BeatLoader from 'react-spinners/BeatLoader';
+
+
 
 const Description = (props) => {
   const [qty, setQty] = useState(1);
@@ -10,7 +15,7 @@ const Description = (props) => {
   const _id =  props.match.params.id;
   const products = useSelector((state)=>state.productDetails);
   const {product} = products;
-
+  const classes = useStyles();
   const dis = product.description;
   const image = product.image;
   const name = product.name;
@@ -29,8 +34,19 @@ const Description = (props) => {
 
     if(!image)
     {
-      return <div> ...Loading </div>
+      return (
+        <div>
+        <BeatLoader
+        size={200}
+        color={'#534853'}
+        loading = {true}
+        style={{}}
+        />
+</div>
+
+      )
     }
+    
 
     return (
         <div>
@@ -40,11 +56,13 @@ const Description = (props) => {
       <div className="row top">
         <div className="imgContainer">
       
-          {image.map((imgSrc, index) => (
-
-          <img className='large' src={imgSrc} key={index}/>
-          
-          ))}
+        <div className={classes.scrollBar} >
+          <Scrollbars className={classes.scrollBarImport}>           
+            {image.map((imgSrc, index) => (
+            <img className={classes.cardsLarge} src={imgSrc} key={index}/>
+            ))}
+          </Scrollbars>
+        </div>
 
         </div>
         <div className="col-1">
