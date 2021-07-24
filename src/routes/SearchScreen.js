@@ -1,11 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { listProducts } from '../actions/actions2';
-import Card from '../components/Cards/Card/Card';
+import { listProducts,addToCart } from '../actions/actions2';
 import { prices, ratings } from '../utils';
+import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { AddShoppingCart } from '@material-ui/icons';
+import useStyles from './styles';
+
 
 export default function SearchScreen(props) {
+
+
+
+
   const {
     name = 'all',
     category = 'all',
@@ -17,6 +26,16 @@ export default function SearchScreen(props) {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+
+
+
+  const classes = useStyles();
+
+
+  function addToCartHandler (_id) {
+    dispatch(addToCart(_id, 1));
+  };
+
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
   const {
@@ -35,6 +54,7 @@ export default function SearchScreen(props) {
         order,
       })
     );
+
   }, [category, dispatch, max, min, name, order, rating]);
 
   const getFilterUrl = (filter) => {
@@ -147,18 +167,36 @@ export default function SearchScreen(props) {
       {error}
     ) : (
       <>
-      
-        <div className="row center">
-        {products.map((product) => (
-          <Card 
-          product={product} 
-          image = {product.image}
-          title = {''}
-          name = {product.name}
-          price ={product.price}
-          />                
-          ))}
-        </div>
+        <div style={{ width: 1800, height: 1200, borderStyle: 'solid', borderWidth: '5'}} >
+            <Scrollbars>
+              <Grid container justify="center" spacing={1}>
+                {/* <img src={item.image[0]} alt={item.name} style={{height:300, width:300}} ></img> */}
+                {products.map((item) => (
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <Card className={classes.root} style={{ borderStyle: 'solid',}}>
+                    
+                  <CardMedia className={classes.media} image={item.image[0]} title={item.name} />
+                  <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h6" component="h5">
+                  <Link to={`/description/${item.product}`}>{item.name}</Link> 
+                  </Typography>
+                  </CardContent>
+                  <div className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="legend" >
+                  ${item.price}
+                  </Typography>
+                  </div>
+                  <CardActions disableSpacing className={classes.cardActions}>
+                  <IconButton aria-label="Add to Cart"   >
+                  <AddShoppingCart fontSize='large' onClick={(e) =>addToCartHandler(item._id)}  />
+                  </IconButton>
+                    </CardActions>
+                  </Card>
+                  </Grid>
+                  ))}
+              </Grid>
+            </Scrollbars> 
+          </div>
       </>
     )}
   </div>
