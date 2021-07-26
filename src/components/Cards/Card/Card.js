@@ -13,7 +13,7 @@ const GenerticCards = ({ product, image, name, price, rating}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  // const history = useHistory();
   const _id =  product._id;
 
   const sellerId = product.seller || '00000';
@@ -34,7 +34,7 @@ const GenerticCards = ({ product, image, name, price, rating}) => {
                 </Link>
             </Typography>
           <Typography gutterBottom variant="h5" component="h2">
-            {price}
+            ${price}
           </Typography>
         </div>
         <Typography gutterBottom variant="h5" component="legend">

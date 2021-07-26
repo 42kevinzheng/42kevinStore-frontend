@@ -5,7 +5,6 @@ import { listTopSellers } from '../actions/actions2';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 const Banners = () => {
 
     const dispatch = useDispatch();
@@ -25,7 +24,7 @@ const Banners = () => {
         {error}
     ) : (
         <>
-          <Carousel showArrows autoPlay showThumbs={false}>
+          <Carousel infiniteLoop={true} showArrows autoPlay showThumbs={false}>
             {users.map((seller) => (
               <div key={seller._id}>
                 <Link to={`/seller/${seller._id}`}>

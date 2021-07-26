@@ -4,6 +4,8 @@ import {Link } from 'react-router-dom';
 import { listProductCategories } from '../actions/actions2';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import { Scrollbars } from 'react-custom-scrollbars';
+
 
 const SideBar = () => {
 
@@ -24,7 +26,7 @@ const SideBar = () => {
             <button type="button" onClick={() => setSidebarIsOpen(true)} >
               <MenuIcon/>
             </button>
-            <aside className={sidebarIsOpen ? 'open' : ''}>
+            <aside className={sidebarIsOpen ? 'open' : ''} style={{ marginLeft:-24,marginTop:24.3}}>
           <ul className="categories">
             <li>
               <strong>Categories</strong>
@@ -40,7 +42,8 @@ const SideBar = () => {
             ) : errorCategories ? (
           {errorCategories}
             ) : (
-              categories.map((c) => (
+              <Scrollbars style={{ width: 442, height: 1173, borderStyle: 'solid'}}>
+              {categories.map((c) => (
                 <li key={c}>
                   <Link
                     to={`/search/category/${c}`}
@@ -49,7 +52,8 @@ const SideBar = () => {
                     {c}
                   </Link>
                 </li>
-              ))
+              ))}
+              </Scrollbars>
             )}
           </ul>
         </aside>

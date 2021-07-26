@@ -12,13 +12,29 @@ const Cards = () => {
   const dispatch = useDispatch();
 
   const productList = useSelector((state)=>state.productList);
-  const {products} = productList;
+  const {products,loading, error} = productList;
 
 useEffect(() => {
  dispatch(listProducts({}));
 }, [dispatch])
 
   return (
+
+
+
+
+
+
+
+<div>
+{loading ? (
+<div className="loading">
+<i className="fa fa-spinner fa-spin"></i> Loading...
+</div>
+) : error ? (
+{error}
+) : (
+   
     <div className ={classes.content} >
       <div className={classes.fit}>
         <Grid container justify="center" spacing={4}>
@@ -37,6 +53,12 @@ useEffect(() => {
         </Grid>
       </div>
     </div>
+
+)}
+</div>
+
+
+
   );
 };
 

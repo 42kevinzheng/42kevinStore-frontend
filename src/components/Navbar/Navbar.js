@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { AppBar, Toolbar, IconButton, Badge,Typography } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import useStyles from './styles';
@@ -8,6 +8,42 @@ import {signout} from '../../actions/actions2';
 import { Link, Route } from 'react-router-dom';
 import SearchBox from '../SearchBox';
 import SideBar from '../SideBar';
+
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
+const StyledMenu = withStyles({
+  paper: {
+    border: "1px solid #d3d4d5"
+  }
+})((props) => (
+  <Menu
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center"
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "center"
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    "&:focus": {
+      backgroundColor: theme.palette.primary.main,
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white
+      }
+    }
+  }
+}))(MenuItem);
+
 
 const Navbar = () => {
   const classes = useStyles();
@@ -20,10 +56,26 @@ const Navbar = () => {
     dispatch(signout());
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorE2, setAnchorE2] = useState(null);
+  const [anchorE3, setAnchorE3] = useState(null);
+
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleClose2 = () => {
+    setAnchorE2(null);
+  };
+  const handleClose3 = () => {
+    setAnchorE3(null);
+  };
+
+
+
+
   return (
     <div>
-
-
       <AppBar position="fixed" className={classes.appBar} color="inherit">
       <Toolbar>
       <SideBar/>
@@ -34,9 +86,6 @@ const Navbar = () => {
           <Link to="/">Kevin</Link>
         </Typography>
 
-
-
-        
         <div >
             <Route render={({ history }) => (
                 <SearchBox history={history} style={{ justifyContent:'center', marginLeft:"200px"}}></SearchBox>
@@ -60,68 +109,95 @@ const Navbar = () => {
         </div>
 
 
-        {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Admin 
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/productlist">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist">Orders</Link>
-                  </li>
-                  <li>
-                    <Link to="/userlist">Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-
+      {userInfo && userInfo.isAdmin && (
+        <div> 
+          <Button aria-haspopup="true" variant="contained" color="primary" 
+          onClick={(e)=>setAnchorEl(e.currentTarget)}>
+            Admin
+          </Button>
+          <StyledMenu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+            <Link to="/dashboard">
+              <StyledMenuItem>
+                  Dashboard
+              </StyledMenuItem>
+            </Link>
+            <Link to="/productlist">
+              <StyledMenuItem> 
+                Products 
+              </StyledMenuItem>
+            </Link>
+            <Link to="/orderlist">
+              <StyledMenuItem>
+                Orders
+              </StyledMenuItem>
+            </Link>
+            <Link to="/userlist">
+              <StyledMenuItem>
+                Users
+              </StyledMenuItem>
+            </Link>
+          </StyledMenu>
+        </div>
+      )}
 
 
       {userInfo && userInfo.isSeller && (
-              <div className="dropdown">
-                <Link to="#seller">
-                  Seller 
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/productlist/seller">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist/seller">Orders</Link>
-                  </li>
-                </ul>
-              </div>
+                  <div> 
+                  <Button aria-haspopup="true" variant="contained" color="primary" 
+                  onClick={(e)=>setAnchorE2(e.currentTarget)}>
+                    Seller
+                  </Button>
+                  <StyledMenu anchorEl={anchorE2} open={Boolean(anchorE2)} onClose={handleClose2}>
+                  <Link to="/productlist/seller">   
+                  <StyledMenuItem>
+                  Products
+                      </StyledMenuItem>
+                    </Link>
+                    <Link to="/orderlist/seller">
+                      <StyledMenuItem> 
+                      Orders 
+                      </StyledMenuItem>
+                    </Link>
+                    
+                  </StyledMenu>
+                  </div>
             )}
 
 
 
         {userInfo ? (
-              <div className="dropdown">
-                <Link to="#">
-                  {userInfo.name} {' '}
-                </Link>
-                <ul className="dropdown-content">
-                <li>
-                    <Link to="/profile">
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="#signout" onClick={signoutHandler}>
-                      Sign Out
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+
+<div> 
+<Button aria-haspopup="true" variant="contained" color="primary" 
+onClick={(e)=>setAnchorE3(e.currentTarget)}>
+                    {userInfo.name} {' '}
+
+</Button>
+<StyledMenu anchorEl={anchorE3} open={Boolean(anchorE3)} onClose={handleClose3}>
+<Link to="/profile">
+<StyledMenuItem>
+Profile
+    </StyledMenuItem>
+  </Link>
+  <Link to="#signout" onClick={signoutHandler}>
+    <StyledMenuItem> 
+    Sign Out
+ 
+    </StyledMenuItem>
+  </Link>
+  
+</StyledMenu>
+</div>
+
+
+
+
+
+ 
             ) : (
+              <Button aria-haspopup="true" variant="contained" color="primary">
               <Link to="/signin">Sign In</Link>
+              </Button>
             )}
 
 
