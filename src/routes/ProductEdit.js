@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsProduct, updateProduct } from '../actions/actions2';
-import Axios from 'axios';
-import FileBase from 'react-file-base64';
-
-
-
+import imageCompression from 'browser-image-compression';
 
 export default function ProductEditScreen(props) {
   const productId = props.match.params.id;
@@ -16,10 +12,8 @@ export default function ProductEditScreen(props) {
   const [countInStock, setCountInStock] = useState('');
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
-
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
     loading: loadingUpdate,
@@ -60,12 +54,48 @@ export default function ProductEditScreen(props) {
       })
     );
   };
-  const [loadingUpload, setLoadingUpload] = useState(false);
-  const [errorUpload, setErrorUpload] = useState('');
 
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  let filelist = []
+  const toBase64 =(imageArray) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(imageArray); 
+    reader.onloadend = function() {
+        var base64data = reader.result; 
+        // console.log('this is for the final result', base64data)
+        filelist.push(base64data)
+    }
+  }
+  
+  async function handleImageUpload(event) {
+    
+    for(let i=0;i<event.target.files.length;i++)
+    {
+      const imageFile = event.target.files[i];
+      // console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+      // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+      
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+      }
+      try {
+        const compressedFile = await imageCompression(imageFile, options);
+        // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+        // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      
+        await toBase64(compressedFile); // write your own logic
+      } catch (error) {
+        console.log(error);
+      }
 
+    }
+    // console.log('this is the final list', filelist)
+    setImage(filelist)
+  }
+
+
+  
   return (
     <div>
       <form className="form" onSubmit={submitHandler}>
@@ -74,7 +104,7 @@ export default function ProductEditScreen(props) {
         </div>
         {loadingUpdate && <div className="loading">
         Loading...
-       </div>}
+      </div>}
         {errorUpdate && {errorUpdate}}
         {loading ? (
           <div className="loading">
@@ -117,29 +147,13 @@ export default function ProductEditScreen(props) {
             <div>
 
               <label htmlFor="imagedFile">Image File</label>
-{/* 
-              <input type="file" multiple={true} onChange= {(base64)  => {
-                    const file = [];
-                    for(let i =0; i < base64.length; i++)
-                    {
-                      file.push(base64[i].base64);
-                    }
-                    setImage(file);                
-                  }}/>  */}
 
-                <FileBase type="file" multiple={true} onDone={ (base64)  => {
-                    const file = [];
-                    for(let i =0; i < base64.length; i++) {
-                      file.push(base64[i].base64);
-                    }
-                    setImage(file);                
-                  }} />
-              {loadingUpload &&  <div className="loading">
-       <i className="fa fa-spinner fa-spin"></i> Loading...
-       </div>}
-              {errorUpload && (
-                {errorUpload}
-              )}
+        <input type="file" multiple  accept="image/*" onChange={(event) => handleImageUpload(event)  }  />
+
+        {null &&  <div className="loading">
+      <i className="fa fa-spinner fa-spin"></i> Loading...
+      </div>}
+              {' '}
             </div>
             <div>
               <label htmlFor="category">Category</label>
@@ -194,9 +208,4 @@ export default function ProductEditScreen(props) {
     </div>
   );
 }
-
-
-
-
-
 
