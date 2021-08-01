@@ -14,7 +14,7 @@ export default function Register(props) {
     : '/';
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { userInfo, loading, error } = userRegister;
+  const { userInfo} = userRegister;
 
   const dispatch = useDispatch();
   const submitHandler = (e) => {

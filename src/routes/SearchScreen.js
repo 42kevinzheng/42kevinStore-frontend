@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { AddShoppingCart } from '@material-ui/icons';
 import useStyles from './styles';
+import Rating from "@material-ui/lab/Rating";
 
 
 export default function SearchScreen(props) {
@@ -67,6 +68,7 @@ export default function SearchScreen(props) {
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}`;
   };
 
+
   return (
 
 <div>
@@ -78,8 +80,13 @@ export default function SearchScreen(props) {
   ) : error ? (
   {error}
   ) : (
-    <div>{products.length} Results</div>
+    <div style={{fontSize:'25px',marginLeft:'25px'}}>
+      {products.length} Results
+      </div>
   )}
+
+
+
   <div>
     Sort by{' '}
     <select value={order} onChange={(e) => {
@@ -92,9 +99,23 @@ export default function SearchScreen(props) {
       <option value="toprated">Avg. Customer Reviews</option>
     </select>
   </div>
+
+
+
+
+
+  
 </div>
+
+
+
+
 <div className="row top">
+
   <div className="col-1">
+
+  <Scrollbars style={{ width: 300, height: 1000, borderStyle: 'solid', borderWidth:'2px',marginLeft:'10px', borderRadius: '5px' }}>
+
     <h3>Department</h3>
     <div>
       {loadingCategories ? (
@@ -157,7 +178,13 @@ export default function SearchScreen(props) {
         ))}
       </ul>
     </div>
+    </Scrollbars>
+
   </div>
+  
+
+
+
   <div className="col-3">
     {loading ? (
           <div className="loading">
@@ -167,31 +194,45 @@ export default function SearchScreen(props) {
       {error}
     ) : (
       <>
-        <div style={{ width: 1800, height: 1200, borderStyle: 'solid', borderWidth: '5'}} >
+        <div style={{ width: 1850, height: 1170, borderStyle: 'solid', borderWidth: '2px',  borderRadius: '5px'}} >
             <Scrollbars>
               <Grid container justify="center" spacing={1}>
                 {/* <img src={item.image[0]} alt={item.name} style={{height:300, width:300}} ></img> */}
-                {products.map((item) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <Card className={classes.root} style={{ borderStyle: 'solid',}}>
-                    
-                  <CardMedia className={classes.media} image={item.image[0]} title={item.name} />
-                  <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h6" component="h5">
-                  <Link to={`/description/${item.product}`}>{item.name}</Link> 
-                  </Typography>
-                  </CardContent>
-                  <div className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="legend" >
-                  ${item.price}
-                  </Typography>
-                  </div>
-                  <CardActions disableSpacing className={classes.cardActions}>
-                  <IconButton aria-label="Add to Cart"   >
-                  <AddShoppingCart fontSize='large' onClick={(e) =>addToCartHandler(item._id)}  />
-                  </IconButton>
-                    </CardActions>
-                  </Card>
+                {products.map((item,index) => (
+            
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                    <Card className={classes.root} style={{marginLeft: '5px'}}>
+      <CardMedia className={classes.media} image={item.image[0]} title={name} />
+      <CardContent>
+        <div className={classes.cardContent}>
+          <Typography gutterBottom variant="h5" component="h2">
+                <Link to= {{ pathname:`/description/${item._id}`}}> 
+                  {item.name} 
+                </Link>
+            </Typography>
+          <Typography gutterBottom variant="h5" component="h2">
+            ${item.price}
+          </Typography>
+        </div>
+        <Typography gutterBottom variant="h5" component="legend">
+          <Rating name="half-rating" defaultValue={1} value={item.rating} precision={0.5} readOnly/> {rating}
+          </Typography>
+      </CardContent>
+
+      <CardActions disableSpacing className={classes.cardActions}>
+        <IconButton aria-label="Add to Cart"  onClick={()=>addToCartHandler(item._id)} 
+>
+        <AddShoppingCart
+        fontSize='large' 
+        />
+        </IconButton>
+        <Typography gutterBottom variant="h5" component="legend">
+            <Link to={`/seller/${item.seller._id}`}>
+          {   '[Store Name]'|| item.seller.seller.name }
+            </Link>
+          </Typography>
+      </CardActions>
+    </Card>
                   </Grid>
                   ))}
               </Grid>

@@ -11,7 +11,6 @@ export default function ProfileScreen() {
   const [sellerName, setSellerName] = useState('');
   const [sellerLogo, setSellerLogo] = useState('');
   const [sellerDescription, setSellerDescription] = useState('');
-
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const userDetails = useSelector((state) => state.userDetails);
@@ -137,6 +136,11 @@ export default function ProfileScreen() {
                     value={sellerLogo}
                     onChange={(e) => setSellerLogo(e.target.value)}
                   ></input>
+
+
+{/* <FileBase type="file" multiple={false} onDone={(base64) =>{setSellerLogo(base64)}}/> */}
+
+
                 </div>
                 <div>
                   <label htmlFor="sellerDescription">Seller Description</label>

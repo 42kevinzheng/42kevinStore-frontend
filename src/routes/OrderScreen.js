@@ -3,11 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deliverOrder, detailsOrder, payOrder } from '../actions/actions2';
 import Axios from 'axios';
+import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import { PayPalButton } from 'react-paypal-button-v2';
-
+import { Scrollbars } from 'react-custom-scrollbars';
+import useStyles from './styles';
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
+  const classes = useStyles();
+
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
@@ -59,7 +64,7 @@ export default function OrderScreen(props) {
     }
 }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
-
+console.log('this is order ', order);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(order, paymentResult));
@@ -106,28 +111,49 @@ export default function OrderScreen(props) {
               <div className="card card-body">
                 <h2>Order Items</h2>
                 <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image[0]}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/description/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
 
-                        <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
+
+
+
+                <div style={{   
+  width: 1800, 
+  height: 1200,
+  borderStyle: 'solid',
+  borderWidth: '5'}} >
+<Scrollbars >
+<Grid container justify="center" spacing={1}>
+{/* <img src={item.image[0]} alt={item.name} style={{height:300, width:300}} ></img> */}
+
+  {order.orderItems.map((item) => (
+
+    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Card className={classes.root} style={{  borderStyle: 'solid',}}>
+    <CardMedia className={classes.media} image={item.image[0]} title={item.name} />
+    <CardContent className={classes.cardContent}>
+    <Typography gutterBottom variant="h6" component="h5">
+          <Link to={`/description/${item.product}`}>{item.name}</Link> 
+          </Typography>
+      
+          </CardContent>
+          <Typography  gutterBottom variant="h5" component="legend">
+          {item.qty} x ${item.price} = ${item.qty * item.price}
+          </Typography>
+
+            <div className={classes.cardContent}>
+          <Typography gutterBottom variant="h5" component="legend" >
+          ${item.price}
+          </Typography>
+
+          </div>
+    </Card>
+    </Grid>
+  ))}
+              </Grid>
+  </Scrollbars>
+  
+</div>
+
+
                 </ul>
               </div>
             </li>

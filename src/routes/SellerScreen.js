@@ -74,12 +74,6 @@ export default function SellerScreen(props) {
         )}
       </div>
 
-
-
-
-
-
-
       <div className="col-3">
         {loadingProducts ? (
             <div className="loading">
@@ -88,18 +82,11 @@ export default function SellerScreen(props) {
         ) : errorProducts ? (
         {errorProducts}
         ) : (
-
 <div> 
 <h2>Featured Products</h2>
 
-
           <div className ={classes.content} >
           <div className={classes.fit}>
-
-
-
-       
-
 
   <div style={{   
   width: 1800, 
@@ -111,7 +98,6 @@ export default function SellerScreen(props) {
 {/* <img src={item.image[0]} alt={item.name} style={{height:300, width:300}} ></img> */}
 
   {products.map((item) => (
-
     <Grid item xs={12} sm={6} md={4} lg={3}>
     <Card className={classes.root} style={{  borderStyle: 'solid',}}>
     <CardMedia className={classes.media} image={item.image[0]} title={item.name} />
@@ -119,17 +105,12 @@ export default function SellerScreen(props) {
     <Typography gutterBottom variant="h6" component="h5">
           <Link to={`/description/${item.product}`}>{item.name}</Link> 
           </Typography>
-        
           </CardContent>
-       
             <div className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="legend" >
           ${item.price}
           </Typography>
-
-  
           </div>
-
           <CardActions disableSpacing className={classes.cardActions}>
         <IconButton aria-label="Add to Cart"  
 >

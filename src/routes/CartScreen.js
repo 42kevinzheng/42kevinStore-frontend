@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
 import { addToCart, removeFromCart } from '../actions/actions2';

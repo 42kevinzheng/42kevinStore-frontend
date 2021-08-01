@@ -11,17 +11,14 @@ export default function UserEditScreen(props) {
   const [email, setEmail] = useState('');
   const [isSeller, setIsSeller] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
-
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
   } = userUpdate;
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (successUpdate) {
@@ -37,10 +34,8 @@ export default function UserEditScreen(props) {
       setIsAdmin(user.isAdmin);
     }
   }, [dispatch, props.history, successUpdate, user, userId]);
-
   const submitHandler = (e) => {
     e.preventDefault();
-    // dispatch update user
     dispatch(updateUser({ _id: userId, name, email, isSeller, isAdmin }));
   };
   return (
@@ -56,9 +51,9 @@ export default function UserEditScreen(props) {
           )}
         </div>
         {loading ? (
-           <div className="loading">
-           <i className="fa fa-spinner fa-spin"></i> Loading...
-           </div>
+          <div className="loading">
+          <i className="fa fa-spinner fa-spin"></i> Loading...
+          </div>
         ) : error ? (
           {error}
         ) : (

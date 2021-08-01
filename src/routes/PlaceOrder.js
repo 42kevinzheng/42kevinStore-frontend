@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/Ship';
 import { createOrder } from '../actions/actions2';
 
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Scrollbars } from 'react-custom-scrollbars';
 import useStyles from './styles';
@@ -17,7 +17,7 @@ export default function PlaceOrder(props) {
     }
     console.log(cart)
     const orderCreate = useSelector((state) => state.orderCreate);
-    const { loading, success, error, order } = orderCreate;
+    const { success, order } = orderCreate;
     const toPrice = (num) => Number(num.toFixed(2)); 
     cart.itemsPrice = toPrice(
       cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
@@ -73,7 +73,7 @@ export default function PlaceOrder(props) {
 <Scrollbars >
 <Grid container justify="center" spacing={1}>
                     {cart.cartItems.map((item) => (
-<Grid item xs={12} sm={6} md={4} lg={3}>
+<Grid item xs={12} sm={6} md={4} lg={3} key={item.product}>
 <Card className={classes.root} style={{  borderStyle: 'solid',}}>
 <CardMedia className={classes.media} image={item.image[0]} title={item.name} />
 <CardContent className={classes.cardContent}>

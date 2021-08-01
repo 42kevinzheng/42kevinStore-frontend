@@ -5,9 +5,7 @@ import Navbar from '../components/Navbar/Navbar';
 import { detailsProduct } from '../actions/actions2';
 import { Scrollbars } from 'react-custom-scrollbars';
 import useStyles from './styles';
-import BeatLoader from 'react-spinners/BeatLoader';
-
-
+import spins from '../assest/spin.gif';
 
 const Description = (props) => {
   const [qty, setQty] = useState(1);
@@ -16,50 +14,53 @@ const Description = (props) => {
   const products = useSelector((state)=>state.productDetails);
   const {product} = products;
   const classes = useStyles();
-  const dis = product.description;
-  const image = product.image;
-  const name = product.name;
-  const price = product.price;
-  const des = product.description;
-  const sellerId = product.seller || '00000';
-  const sellerName =  sellerId.seller || "none";
-
     useEffect(()=>{
         dispatch(detailsProduct(_id));
     },[dispatch, _id])
-
     const addToCartHandler = () => {
       props.history.push(`/cart/${_id}?qty=${qty}`);
     };
-
-    if(!image)
+    if(!product)
+    {
+      return(
+        <div  style={{display:'flex',justifyContent:'center'}} >
+          <div>
+          <p>Might have been deleted or wrong URL link.</p>
+          </div>
+          <div>
+          <img 
+          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngkey.com%2Fpng%2Fdetail%2F163-1639407_view-samegoogleiqdbsaucenao-1391950301682-don-t-know-meme-drawing.png&f=1&nofb=1"
+          alt={"Nothing"}
+          />
+          </div>
+        </div>
+      )
+    }
+    else if(!product.image)
     {
       return (
         <div>
-        <BeatLoader
-        size={200}
-        color={'#534853'}
-        loading = {true}
-        style={{}}
-        />
-</div>
-
+         <img 
+          src={spins}
+          alt={"Nothing"}
+          />
+        </div>
       )
     }
-    
 
+  const sellerId = product.seller || '00000';
+  const sellerName =  sellerId.seller || "none";
     return (
         <div>
-              <Navbar />
+            <Navbar />
         <div className="toolbar">
       <Link to="/">Back to result</Link>
       <div className="row top">
         <div className="imgContainer">
-      
         <div className={classes.scrollBar} >
           <Scrollbars className={classes.scrollBarImport}>           
-            {image.map((imgSrc, index) => (
-            <img className={classes.cardsLarge} src={imgSrc} key={index}/>
+            {product.image.map((imgSrc, index) => (
+            <img className={classes.cardsLarge} src={imgSrc} key={index} alt={"Nothing"}/>
             ))}
           </Scrollbars>
         </div>
@@ -68,12 +69,12 @@ const Description = (props) => {
         <div className="col-1">
           <ul>
             <li>
-              <h1>{name}</h1>
+              <h1>{product.name}</h1>
             </li>
-            <li>Price : ${price}</li>
+            <li>Price : ${product.price}</li>
             <li>
               Description:
-              <p>{dis?des:name}</p>
+              <p>{product.description?product.description:product.name}</p>
             </li>
           </ul>
         </div>
@@ -90,7 +91,7 @@ const Description = (props) => {
               <li>
                 <div className="row">
                   <div>Price:</div>
-                  <div className="price">${price}</div>
+                  <div className="price">${product.price}</div>
                 </div>
                 </li>
                   {3 > 0 && (
@@ -123,6 +124,9 @@ const Description = (props) => {
         </div>
       </div>
 </div>
+
+
+
     </div>
     )
 };

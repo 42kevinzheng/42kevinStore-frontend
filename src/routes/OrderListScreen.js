@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteOrder, listOrders  } from '../actions/actions2';
+import { Link } from 'react-router-dom';
+import spin from '../assest/spin.gif';
 
 
 export default function OrderListScreen(props) {
@@ -29,14 +31,20 @@ export default function OrderListScreen(props) {
   return (
     <div>
       <h1>Orders</h1>
-      {loadingDelete &&  <div className="loading">
-           <i className="fa fa-spinner fa-spin"></i> Loading...
-           </div>}
+      {loadingDelete &&  <div style={{marginLeft:'1000px'}}>
+         <img 
+          src={spin}
+          alt={"Nothing"}
+          />
+        </div>}
       {errorDelete && {errorDelete}}
       {loading ? (
-         <div className="loading">
-         <i className="fa fa-spinner fa-spin"></i> Loading...
-         </div>
+        <div style={{marginLeft:'1000px'}}>
+        <img 
+         src={spin}
+         alt={"Nothing"}
+         />
+       </div>
       ) : error ? (
        {error}
       ) : (
@@ -82,6 +90,19 @@ export default function OrderListScreen(props) {
                   >
                     Delete
                   </button>
+                  
+                  {order.isPaid
+                    ?  (<button type="button" className="small">
+                  <Link to= {{ pathname:`/download/${order._id}`}}> 
+                    Download
+              </Link>
+                    
+                  </button>
+                    ):( "[Not Paid, Go to details to pay]") }
+
+
+
+
                 </td>
               </tr>
             ))}

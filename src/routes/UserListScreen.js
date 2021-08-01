@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listUsers, deleteUser } from '../actions/actions2';
+import spin from '../assest/spin.gif';
 
 export default function UserListScreen(props) {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
-
   const userDelete = useSelector((state) => state.userDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
   } = userDelete;
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listUsers());
@@ -28,14 +27,20 @@ export default function UserListScreen(props) {
   return (
     <div>
       <h1>Users</h1>
-      {loadingDelete && <div className="loading">
-        <i className="fa fa-spinner fa-spin"></i> Loading...
+      {loadingDelete && <div style={{marginLeft:'1000px'}}>
+      <img 
+          src={spin}
+          alt={"Nothing"}
+          />
         </div>}
       {errorDelete && {errorDelete}}
       {successDelete }
       {loading ? (
-        <div className="loading">
-        <i className="fa fa-spinner fa-spin"></i> Loading...
+        <div style={{marginLeft:'1000px'}}>
+         <img 
+          src={spin}
+          alt={"Nothing"}
+          />
         </div>
       ) : error ? (
         {error}

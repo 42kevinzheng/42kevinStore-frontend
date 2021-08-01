@@ -35,14 +35,9 @@ export default makeStyles((theme) => ({
       marginTop: 20
   },
 
-
-
-
-  
   cartImageRoot : {
       width: '100%',   
   },
-
 
   media: {
     height: 0,
@@ -59,8 +54,4 @@ export default makeStyles((theme) => ({
   },
 
 
-
-
-
-  
 }));
