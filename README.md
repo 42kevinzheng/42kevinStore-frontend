@@ -71,4 +71,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Live Web Hosting
 
-This a work in progress. For now there is live web version: https://kevinstore.netlify.app/
+This a work in progress. For now there is live web version: https://everythingstorekevin.netlify.app/ 
