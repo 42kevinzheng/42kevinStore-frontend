@@ -100,9 +100,6 @@ export default function OrderListScreen(props) {
                   </button>
                     ):( "[Not Paid, Go to details to pay]") }
 
-
-
-
                 </td>
               </tr>
             ))}

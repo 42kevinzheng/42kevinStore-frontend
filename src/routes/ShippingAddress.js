@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from '../actions/actions2';
 import CheckoutSteps from '../components/Ship';
+import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import useStyles from './styles';
+import Grid from '@material-ui/core/Grid';
 
 export default function ShippingAddress(props) {
   const userSignin = useSelector((state) => state.userSignin);
@@ -11,39 +14,96 @@ export default function ShippingAddress(props) {
   if (!userInfo) {
     props.history.push('/signin');
   }
-  const [fullName, setFullName] = useState(shippingAddress.fullName);
+  const classes = useStyles();
+  const [firstName, setFirstName] = useState(shippingAddress.firstName);
+  const [lastName, setLastName] = useState(shippingAddress.lastName);
+  const [email,setEmail] = useState(shippingAddress.email);
+  const [phone,setPhone] = useState(shippingAddress.phone);
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
+  const [state, setState] = useState(shippingAddress.state);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      saveShippingAddress({ fullName, address, city, postalCode, country })
+      saveShippingAddress({ firstName,lastName,email, state,phone, address, city, postalCode, country })
     );
     props.history.push('/payment');
   };
   return (
-    <div>
-      <CheckoutSteps step1 step2></CheckoutSteps>
+    <div style={{position: 'relative'}}>
+      <Grid
+  container
+  spacing={0}
+  alignItems="center"
+  justify="center"
+ >
+
+  <Grid item xs={3}>
+
+  <Card >
+  <CheckoutSteps step1 step2></CheckoutSteps>
+
       <form className="form" onSubmit={submitHandler}>
+
         <div>
           <h1>Shipping Address</h1>
         </div>
-        <div>
-          <label htmlFor="fullName">Full Name</label>
+
+
+
+        <div style={{marginLeft:"40px"}}>
+          <label >First Name</label>
           <input
             type="text"
-            id="fullName"
-            placeholder="Enter full name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            id="firstName"
+            placeholder="Enter first name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          ></input>
+          <label style={{marginLeft:'100px'}}>Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            placeholder="Enter last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
           ></input>
         </div>
-        <div>
-          <label htmlFor="address">Address</label>
+
+
+
+        <div style={{marginLeft:"40px"}}>
+          <label htmlFor="address">Phone Number</label>
+            <input
+            type="text"
+            id="phone"
+            placeholder="Enter Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          ></input>
+          <label style={{marginLeft:'50px'}}>Email Address</label>
+          <input
+            type="text"
+            id="email"
+            placeholder="Enter Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          ></input>
+        </div>
+
+
+
+
+
+        <div style={{marginLeft:"40px"}}>
+        <label htmlFor="address">Address</label>
           <input
             type="text"
             id="address"
@@ -52,8 +112,20 @@ export default function ShippingAddress(props) {
             onChange={(e) => setAddress(e.target.value)}
             required
           ></input>
-        </div>
-        <div>
+
+<label style={{marginLeft:'156px'}}>State</label>
+          <input
+            type="text"
+            id="address"
+            placeholder="Enter address"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            required
+          ></input>
+</div>
+
+
+<div style={{marginLeft:"40px"}}>
           <label htmlFor="city">City</label>
           <input
             type="text"
@@ -63,9 +135,8 @@ export default function ShippingAddress(props) {
             onChange={(e) => setCity(e.target.value)}
             required
           ></input>
-        </div>
-        <div>
-          <label htmlFor="postalCode">Postal Code</label>
+     
+          <label style={{marginLeft:'137px'}}>Postal Code</label>
           <input
             type="text"
             id="postalCode"
@@ -75,7 +146,7 @@ export default function ShippingAddress(props) {
             required
           ></input>
         </div>
-        <div>
+        <div style={{marginLeft:"40px"}}>
           <label htmlFor="country">Country</label>
           <input
             type="text"
@@ -93,6 +164,9 @@ export default function ShippingAddress(props) {
           </button>
         </div>
       </form>
+      </Card>
+  </Grid>      
+</Grid>
     </div>
   );
 }

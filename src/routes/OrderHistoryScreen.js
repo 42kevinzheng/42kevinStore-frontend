@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listOrderMine } from '../actions/actions2';
+import { Link } from 'react-router-dom';
 
 
 export default function OrderHistoryScreen(props) {
@@ -53,6 +54,14 @@ export default function OrderHistoryScreen(props) {
                   >
                     Details
                   </button>
+                  {order.isPaid
+                    ?  (<button type="button" className="small">
+                  <Link to= {{ pathname:`/download/${order._id}`}}> 
+                    Download
+              </Link>
+                    
+                  </button>
+                    ):( "[Not Paid, Go to details to pay]") }
                 </td>
               </tr>
             ))}
