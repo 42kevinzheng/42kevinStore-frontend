@@ -17,7 +17,7 @@ function Footer() {
     }, []);
 
   return (
-    <div className={classes.footer}>
+    <div className={classes.footer} >
       <hr/>
       <div className="container">
         <div className="row" style={{justifyContent:'center'}}>
@@ -42,21 +42,21 @@ function Footer() {
           </div>
             <div style={{display: 'flex', justifyContent: "space-between"}}>
           <div className="col" style={{marginLeft: 40}}>
-            <h4>Other Cool Projects</h4>
-            <ui className="list-unstyled">
-              <li>DANK MEMES</li>
-              <li>OTHER STUFF</li>
-              <li>GUD STUFF</li>
-            </ui>
+            <h4>Other Cool Project Links</h4>
+            <ul className="list-unstyled">
+              <li>https://github.com/42kevinzheng</li>
+              {/* <li>OTHER STUFF</li>
+              <li>GUD STUFF</li> */}
+            </ul>
           </div>
 
           <div className="col" style={{marginRight: 40}}>
             <h4>Future Features (In Progress)</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
               <li>Pages for Products</li>
               <li></li>
-              <li>GUD STUFF</li>
-            </ui>
+              <li>Update design of website</li>
+            </ul>
           </div>
           </div>
         <hr />

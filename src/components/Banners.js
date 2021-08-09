@@ -4,6 +4,7 @@ import { Carousel } from 'react-responsive-carousel';
 import { listTopSellers } from '../actions/actions2';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import spin from '../assest/spin.gif'
 
 const Banners = () => {
 
@@ -17,8 +18,11 @@ const Banners = () => {
     return (
         <div>
             {loading ? (
-        <div className="loading">
-        <i className="fa fa-spinner fa-spin"></i> Loading...
+        <div style={{marginLeft:'1000px'}}>
+         <img 
+          src={spin}
+          alt={"Nothing"}
+          />
         </div>
     ) : error ? (
         {error}

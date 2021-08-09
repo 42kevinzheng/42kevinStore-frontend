@@ -3,15 +3,11 @@ import { AppBar, Toolbar, IconButton, Badge,Typography } from '@material-ui/core
 import { ShoppingCart } from '@material-ui/icons';
 import useStyles from './styles';
 import logo from './store.png';
-import MoreIcon from '@material-ui/icons/MoreVert';
-
 import { useDispatch, useSelector } from 'react-redux';
 import {signout} from '../../actions/actions2';
 import { Link, Route } from 'react-router-dom';
 import SearchBox from '../SearchBox';
 import SideBar from '../SideBar';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -45,12 +41,6 @@ const StyledMenuItem = withStyles((theme) => ({
   }
 }))(MenuItem);
 
-
-
-
-
-
-
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -77,19 +67,12 @@ const Navbar = () => {
     setAnchorE3(null);
   };
 
-
-
-
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" className={classes.appBar} color="inherit">
       <Toolbar>
-
-        <SideBar/>
-
-
-
-        <Typography  variant="h6" className={classes.title} color="inherit" noWrap>
+        <SideBar />
+        <Typography variant="h6" className={classes.title} color="inherit" noWrap>
         <Link to="/">
           <img src={logo} alt="Dafault Logo" height="70px" className={classes.image}/>
           </Link>
@@ -176,7 +159,6 @@ const Navbar = () => {
                       Orders 
                       </StyledMenuItem>
                     </Link>
-                    
                   </StyledMenu>
                   </div>
             )}
@@ -184,7 +166,6 @@ const Navbar = () => {
 
 
         {userInfo ? (
-
                       <div> 
                       <Button aria-haspopup="true" variant="h6" 
                       onClick={(e)=>setAnchorE3(e.currentTarget)}>
@@ -197,6 +178,11 @@ const Navbar = () => {
                       Profile
                           </StyledMenuItem>
                         </Link>
+                        <Link to="/orderhistory">
+                      <StyledMenuItem> 
+                      Orders 
+                      </StyledMenuItem>
+                    </Link>
                         <Link to="#signout" onClick={signoutHandler}>
                           <StyledMenuItem> 
                           Sign Out

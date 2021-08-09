@@ -3,7 +3,7 @@ import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } fro
 import { AddShoppingCart } from '@material-ui/icons';
 import Rating from "@material-ui/lab/Rating";
 import { Link } from 'react-router-dom';
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../actions/actions2';
@@ -19,8 +19,8 @@ const GenerticCards = ({ product, image, name, price, rating}) => {
   const sellerId = product.seller || '00000';
   const sellerName =  sellerId.seller || "none";
 
-  const addToCartHandler = () => {
-    dispatch(addToCart(_id, 1));
+  const addToCartHandler = (id) => {
+    dispatch(addToCart(id, 1));
   };
 
   return (
@@ -43,7 +43,7 @@ const GenerticCards = ({ product, image, name, price, rating}) => {
       </CardContent>
 
       <CardActions disableSpacing className={classes.cardActions}>
-        <IconButton aria-label="Add to Cart"  onClick={addToCartHandler} 
+        <IconButton aria-label="Add to Cart"  onClick={()=>addToCartHandler(_id)} 
 >
         <AddShoppingCart
         fontSize='large' 

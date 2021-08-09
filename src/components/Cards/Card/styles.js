@@ -4,7 +4,7 @@ export default makeStyles(() => ({
   root: {
     width: '100%',
     '&:hover':{
-    boxShadow: '15px 20px 30px 11px rgba(231, 9, 9, 0.5) !important',
+    boxShadow: '15px 20px 30px 11px rgba(17, 127, 224) !important',
     transition: 'all 0.7s linear',
     },
     //backgroundColor:'blue',

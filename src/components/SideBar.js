@@ -6,7 +6,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-
 const SideBar = () => {
 
   const dispatch = useDispatch();
@@ -21,12 +20,15 @@ const SideBar = () => {
     dispatch(listProductCategories());
   }, [dispatch]);
 
+
+
+
     return (
-        <div>
+        <div style={{display:'flex'}}>
             <button type="button" onClick={() => setSidebarIsOpen(true)} >
               <MenuIcon/>
             </button>
-            <aside className={sidebarIsOpen ? 'open' : ''} style={{ marginLeft:-24,marginTop:24.3}}>
+            <aside className={sidebarIsOpen ? 'open' : ''} style={{ marginLeft:-24,}}>
           <ul className="categories">
             <li>
               <strong>Categories</strong>

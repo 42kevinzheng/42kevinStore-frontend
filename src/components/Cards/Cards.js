@@ -5,6 +5,7 @@ import useStyles from './styles';
 import { useDispatch,useSelector } from 'react-redux';
 import {listProducts} from '../../actions/actions2';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import spin from '../../assest/spin.gif';
 
 const Cards = () => {
 
@@ -20,21 +21,17 @@ useEffect(() => {
 
   return (
 
-
-
-
-
-
-
 <div>
 {loading ? (
-<div className="loading">
-<i className="fa fa-spinner fa-spin"></i> Loading...
-</div>
+  <div style={{marginLeft:'1000px'}}>
+         <img 
+          src={spin}
+          alt={"Nothing"}
+          />
+        </div>
 ) : error ? (
 {error}
 ) : (
-   
     <div className ={classes.content} >
       <div className={classes.fit}>
         <Grid container justify="center" spacing={4}>
@@ -43,7 +40,6 @@ useEffect(() => {
               <Card 
               product={product} 
               image = {product.image[0]}
-              title = {''}
               name = {product.name}
               price ={product.price}
               rating = {product.rating}
